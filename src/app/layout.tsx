@@ -1,11 +1,16 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Poppins } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import { PanelNameProvider } from '@/contexts/PanelNameContext'
 import { LogoProvider } from '@/contexts/LogoContext'
 
 const inter = Inter({ subsets: ['latin'] })
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-poppins'
+})
 
 export const metadata: Metadata = {
   title: 'Advanced Owner Dashboard',
@@ -59,7 +64,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} ${poppins.variable}`}>
         <ThemeProvider>
           <PanelNameProvider>
             <LogoProvider>

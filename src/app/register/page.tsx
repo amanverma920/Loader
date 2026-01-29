@@ -144,25 +144,25 @@ export default function RegisterPage() {
         </div>
 
         {/* Mobile Header with Logo */}
-        <div className="lg:hidden relative z-10 pt-8 pb-4 px-6">
-          <div className="flex flex-col items-center space-y-4">
-            {/* Logo Container */}
-            <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center shadow-xl shadow-purple-500/30 overflow-hidden">
+        <div className="lg:hidden relative z-10 pt-6 pb-2 px-6">
+          <div className="flex items-center justify-center space-x-3">
+            {/* Logo Container - Smaller */}
+            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center shadow-lg shadow-purple-500/25 overflow-hidden">
               {logoUrl && logoUrl !== '/images/logo.svg' ? (
                 <Image
                   src={logoUrl}
                   alt={`${panelName || 'NexPanel'} Logo`}
-                  width={64}
-                  height={64}
-                  className="w-full h-full object-contain p-2"
+                  width={32}
+                  height={32}
+                  className="w-full h-full object-contain p-1"
                   unoptimized
                 />
               ) : (
-                <UserPlus className="h-10 w-10 text-white" />
+                <UserPlus className="h-5 w-5 text-white" />
               )}
             </div>
-            {/* Brand Name */}
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            {/* Brand Name - Poppins Font */}
+            <h1 className="text-lg font-semibold text-gray-900 dark:text-white font-[var(--font-poppins)]">
               {panelName || 'NexPanel'}
             </h1>
           </div>

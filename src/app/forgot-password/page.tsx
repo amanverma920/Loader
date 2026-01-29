@@ -168,8 +168,8 @@ export default function ForgotPasswordPage() {
           {/* Steps */}
           <div className="space-y-6 w-full max-w-sm">
             <div className={`flex items-center space-x-4 rounded-xl p-4 border transition-all ${step === 'input'
-                ? 'bg-white/20 border-white/30'
-                : 'bg-white/10 border-white/10'
+              ? 'bg-white/20 border-white/30'
+              : 'bg-white/10 border-white/10'
               }`}>
               <div className={`h-12 w-12 rounded-xl flex items-center justify-center flex-shrink-0 ${step === 'input' ? 'bg-white/30' : 'bg-white/20'
                 }`}>
@@ -182,8 +182,8 @@ export default function ForgotPasswordPage() {
             </div>
 
             <div className={`flex items-center space-x-4 rounded-xl p-4 border transition-all ${step === 'otp'
-                ? 'bg-white/20 border-white/30'
-                : 'bg-white/10 border-white/10'
+              ? 'bg-white/20 border-white/30'
+              : 'bg-white/10 border-white/10'
               }`}>
               <div className={`h-12 w-12 rounded-xl flex items-center justify-center flex-shrink-0 ${step === 'otp' ? 'bg-white/30' : 'bg-white/20'
                 }`}>
@@ -196,8 +196,8 @@ export default function ForgotPasswordPage() {
             </div>
 
             <div className={`flex items-center space-x-4 rounded-xl p-4 border transition-all ${step === 'password'
-                ? 'bg-white/20 border-white/30'
-                : 'bg-white/10 border-white/10'
+              ? 'bg-white/20 border-white/30'
+              : 'bg-white/10 border-white/10'
               }`}>
               <div className={`h-12 w-12 rounded-xl flex items-center justify-center flex-shrink-0 ${step === 'password' ? 'bg-white/30' : 'bg-white/20'
                 }`}>
@@ -221,25 +221,25 @@ export default function ForgotPasswordPage() {
         </div>
 
         {/* Mobile Header with Logo */}
-        <div className="lg:hidden relative z-10 pt-8 pb-4 px-6">
-          <div className="flex flex-col items-center space-y-4">
-            {/* Logo Container */}
-            <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-orange-500 to-pink-600 flex items-center justify-center shadow-xl shadow-orange-500/30 overflow-hidden">
+        <div className="lg:hidden relative z-10 pt-6 pb-2 px-6">
+          <div className="flex items-center justify-center space-x-3">
+            {/* Logo Container - Smaller */}
+            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-orange-500 to-pink-600 flex items-center justify-center shadow-lg shadow-orange-500/25 overflow-hidden">
               {logoUrl && logoUrl !== '/images/logo.svg' ? (
                 <Image
                   src={logoUrl}
                   alt={`${panelName || 'NexPanel'} Logo`}
-                  width={64}
-                  height={64}
-                  className="w-full h-full object-contain p-2"
+                  width={32}
+                  height={32}
+                  className="w-full h-full object-contain p-1"
                   unoptimized
                 />
               ) : (
-                <Lock className="h-10 w-10 text-white" />
+                <Lock className="h-5 w-5 text-white" />
               )}
             </div>
-            {/* Brand Name */}
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            {/* Brand Name - Poppins Font */}
+            <h1 className="text-lg font-semibold text-gray-900 dark:text-white font-[var(--font-poppins)]">
               {panelName || 'NexPanel'}
             </h1>
           </div>
@@ -266,24 +266,24 @@ export default function ForgotPasswordPage() {
               <div className="lg:hidden flex justify-center mb-6">
                 <div className="flex items-center space-x-3">
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all ${step === 'input'
-                      ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg'
-                      : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
+                    ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg'
+                    : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                     }`}>
                     1
                   </div>
                   <div className={`w-8 h-1 rounded ${step !== 'input' ? 'bg-orange-500' : 'bg-gray-200 dark:bg-gray-700'}`} />
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all ${step === 'otp'
-                      ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg'
-                      : step === 'password'
-                        ? 'bg-orange-500 text-white'
-                        : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
+                    ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg'
+                    : step === 'password'
+                      ? 'bg-orange-500 text-white'
+                      : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                     }`}>
                     2
                   </div>
                   <div className={`w-8 h-1 rounded ${step === 'password' ? 'bg-orange-500' : 'bg-gray-200 dark:bg-gray-700'}`} />
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all ${step === 'password'
-                      ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg'
-                      : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
+                    ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg'
+                    : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                     }`}>
                     3
                   </div>
