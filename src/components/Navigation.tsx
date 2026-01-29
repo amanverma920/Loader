@@ -258,59 +258,55 @@ export default function Navigation() {
       </div>
 
       {/* Mobile Sidebar - Slides from Left, Below Header */}
-      <div
-        className={`md:hidden fixed inset-x-0 top-16 bottom-0 z-50 transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-          }`}
-      >
-        {/* Backdrop */}
-        <div
-          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
+      {isMobileMenuOpen && (
+        <div className="md:hidden fixed inset-x-0 top-16 bottom-0 z-[100]">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/60"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
 
-        {/* Sidebar Panel */}
-        <div
-          className={`absolute top-0 left-0 h-full w-72 bg-white dark:bg-gray-900 shadow-2xl transform transition-transform duration-300 ease-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-            }`}
-        >
-          {/* Navigation Items - No Header */}
-          <div className="overflow-y-auto py-4 px-3 h-[calc(100%-80px)]">
-            <div className="space-y-1">
-              {navigationItems.map((item) => {
-                const active = isActive(item.href)
-                const Icon = item.icon
-                return (
-                  <button
-                    key={item.name}
-                    onClick={() => {
-                      router.push(item.href)
-                      setIsMobileMenuOpen(false)
-                    }}
-                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${active
-                      ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-500/30'
-                      : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800'
-                      }`}
-                  >
-                    <Icon className={`h-5 w-5 ${active ? 'text-white' : ''}`} />
-                    <span>{item.name}</span>
-                  </button>
-                )
-              })}
+          {/* Sidebar Panel - Solid Background */}
+          <div className="absolute top-0 left-0 h-full w-72 bg-white dark:bg-gray-900 shadow-2xl flex flex-col">
+            {/* Navigation Items */}
+            <div className="flex-1 overflow-y-auto py-4 px-3">
+              <div className="space-y-2">
+                {navigationItems.map((item) => {
+                  const active = isActive(item.href)
+                  const Icon = item.icon
+                  return (
+                    <button
+                      key={item.name}
+                      onClick={() => {
+                        router.push(item.href)
+                        setIsMobileMenuOpen(false)
+                      }}
+                      className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${active
+                        ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg'
+                        : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
+                        }`}
+                    >
+                      <Icon className={`h-5 w-5 ${active ? 'text-white' : 'text-gray-500 dark:text-gray-400'}`} />
+                      <span>{item.name}</span>
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+
+            {/* Bottom Section - Logout */}
+            <div className="border-t border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-900">
+              <button
+                onClick={handleLogout}
+                className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-xl text-sm font-medium bg-red-50 text-red-600 hover:bg-red-100 dark:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500/20 transition-all duration-200"
+              >
+                <LogOut className="h-5 w-5" />
+                <span>Logout</span>
+              </button>
             </div>
           </div>
-
-          {/* Bottom Section - Logout */}
-          <div className="border-t border-gray-200 dark:border-gray-700 p-4">
-            <button
-              onClick={handleLogout}
-              className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-xl text-sm font-medium bg-red-50 text-red-600 hover:bg-red-100 dark:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500/20 transition-all duration-200"
-            >
-              <LogOut className="h-5 w-5" />
-              <span>Logout</span>
-            </button>
-          </div>
         </div>
-      </div>
+      )}
     </nav>
   )
 }
