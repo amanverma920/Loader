@@ -168,8 +168,8 @@ export default function RegisterPage() {
           </div>
         </div>
 
-        {/* Form Container - Moved up */}
-        <div className="flex-1 flex items-start justify-center px-6 py-4 relative z-10">
+        {/* Form Container - Centered, slightly higher on mobile */}
+        <div className="flex-1 flex items-center justify-center px-6 pt-2 pb-6 lg:py-8 relative z-10">
           <div className="w-full max-w-md">
             {/* Form Card */}
             <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl rounded-3xl p-8 shadow-2xl shadow-gray-200/50 dark:shadow-black/30 border border-gray-100 dark:border-gray-800">
