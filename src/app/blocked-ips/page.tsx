@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Navigation from '@/components/Navigation'
 import { Shield, Unlock, Clock, AlertTriangle, Timer } from 'lucide-react'
 
 interface BlockedIP {
@@ -68,10 +69,10 @@ export default function BlockedIPsPage() {
   const formatRemainingTime = (minutes: number | null) => {
     if (minutes === null) return 'Permanent'
     if (minutes <= 0) return 'Expired'
-    
+
     const hours = Math.floor(minutes / 60)
     const mins = minutes % 60
-    
+
     if (hours > 0) {
       return `${hours}h ${mins}m remaining`
     }
@@ -80,24 +81,26 @@ export default function BlockedIPsPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
-        <div className="max-w-7xl mx-auto">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
+        <Navigation />
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="animate-pulse">
             <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/4 mb-6"></div>
             <div className="grid gap-4">
               {[...Array(5)].map((_, i) => (
-                <div key={i} className="h-20 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                <div key={i} className="h-20 bg-gray-200 dark:bg-gray-700 rounded-xl"></div>
               ))}
             </div>
           </div>
-        </div>
+        </main>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
+      <Navigation />
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
@@ -186,11 +189,10 @@ export default function BlockedIPsPage() {
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                          ip.isPermanent 
-                            ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
-                            : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
-                        }`}>
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${ip.isPermanent
+                          ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                          : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+                          }`}>
                           {ip.isPermanent ? 'Permanent' : 'Temporary'}
                         </span>
                       </td>
@@ -216,7 +218,7 @@ export default function BlockedIPsPage() {
             </div>
           </div>
         )}
-      </div>
+      </main>
     </div>
   )
 }

@@ -257,53 +257,39 @@ export default function Navigation() {
         </div>
       </div>
 
-      {/* Mobile Sidebar - Slides from Left, Below Header */}
+      {/* Mobile Menu - Simple Dropdown Below Header */}
       {isMobileMenuOpen && (
-        <div className="md:hidden fixed inset-x-0 top-16 bottom-0 z-[100]">
-          {/* Backdrop */}
-          <div
-            className="absolute inset-0 bg-black/60"
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
+        <div className="md:hidden absolute left-0 right-0 top-full bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-xl z-50">
+          <div className="max-h-[70vh] overflow-y-auto py-2 px-4">
+            {navigationItems.map((item) => {
+              const active = isActive(item.href)
+              const Icon = item.icon
+              return (
+                <button
+                  key={item.name}
+                  onClick={() => {
+                    router.push(item.href)
+                    setIsMobileMenuOpen(false)
+                  }}
+                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-all my-1 ${active
+                    ? 'bg-blue-500 text-white'
+                    : 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800'
+                    }`}
+                >
+                  <Icon className={`h-5 w-5 ${active ? 'text-white' : 'text-gray-500 dark:text-gray-400'}`} />
+                  <span>{item.name}</span>
+                </button>
+              )
+            })}
 
-          {/* Sidebar Panel - Solid Background */}
-          <div className="absolute top-0 left-0 h-full w-72 bg-white dark:bg-gray-900 shadow-2xl flex flex-col">
-            {/* Navigation Items */}
-            <div className="flex-1 overflow-y-auto py-4 px-3">
-              <div className="space-y-2">
-                {navigationItems.map((item) => {
-                  const active = isActive(item.href)
-                  const Icon = item.icon
-                  return (
-                    <button
-                      key={item.name}
-                      onClick={() => {
-                        router.push(item.href)
-                        setIsMobileMenuOpen(false)
-                      }}
-                      className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${active
-                        ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg'
-                        : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
-                        }`}
-                    >
-                      <Icon className={`h-5 w-5 ${active ? 'text-white' : 'text-gray-500 dark:text-gray-400'}`} />
-                      <span>{item.name}</span>
-                    </button>
-                  )
-                })}
-              </div>
-            </div>
-
-            {/* Bottom Section - Logout */}
-            <div className="border-t border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-900">
-              <button
-                onClick={handleLogout}
-                className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-xl text-sm font-medium bg-red-50 text-red-600 hover:bg-red-100 dark:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500/20 transition-all duration-200"
-              >
-                <LogOut className="h-5 w-5" />
-                <span>Logout</span>
-              </button>
-            </div>
+            {/* Logout Button */}
+            <button
+              onClick={handleLogout}
+              className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 my-1 mt-2 border-t border-gray-200 dark:border-gray-700 pt-4"
+            >
+              <LogOut className="h-5 w-5" />
+              <span>Logout</span>
+            </button>
           </div>
         </div>
       )}
