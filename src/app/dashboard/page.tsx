@@ -256,8 +256,8 @@ export default function Dashboard() {
                   <div className={`absolute inset-0 bg-gradient-to-br ${action.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
 
                   <div className="relative">
-                    <div className={`p-3 rounded-xl bg-gradient-to-br ${action.gradient} w-fit mb-3 group-hover:scale-110 transition-transform duration-300`}>
-                      <Icon className="h-5 w-5 text-white" />
+                    <div className={`p-3 rounded-xl bg-gradient-to-br ${action.gradient} w-fit mb-3 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                      <Icon className="h-6 w-6 text-white" strokeWidth={2.5} />
                     </div>
                     <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-white text-sm sm:text-base transition-colors duration-300">
                       {action.name}
@@ -285,8 +285,8 @@ export default function Dashboard() {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${isActive
-                      ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg'
-                      : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+                    ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg'
+                    : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
                     }`}
                 >
                   <Icon className="h-4 w-4" />
