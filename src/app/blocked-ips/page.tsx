@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Navigation from '@/components/Navigation'
+import SidebarLayout from '@/components/SidebarLayout'
 import { Shield, Unlock, Clock, AlertTriangle, Timer } from 'lucide-react'
 
 interface BlockedIP {
@@ -81,42 +81,26 @@ export default function BlockedIPsPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
-        <Navigation />
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="animate-pulse">
-            <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/4 mb-6"></div>
-            <div className="grid gap-4">
-              {[...Array(5)].map((_, i) => (
-                <div key={i} className="h-20 bg-gray-200 dark:bg-gray-700 rounded-xl"></div>
-              ))}
-            </div>
+      <SidebarLayout title="Blocked IPs" description="Loading..." icon={Shield} iconGradient="from-red-500 to-orange-500">
+        <div className="animate-pulse">
+          <div className="grid gap-4">
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="h-20 bg-gray-200 dark:bg-gray-700 rounded-xl"></div>
+            ))}
           </div>
-        </main>
-      </div>
+        </div>
+      </SidebarLayout>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
-      <Navigation />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header with Icon Badge */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-3">
-            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-2xl bg-gradient-to-tr from-red-500 to-orange-500 flex items-center justify-center text-white shadow-lg shadow-red-500/30">
-              <Shield className="h-5 w-5 sm:h-6 sm:w-6" />
-            </div>
-            <div>
-              <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
-                Blocked IP Addresses
-              </h1>
-              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                Manage IPs blocked due to security violations
-              </p>
-            </div>
-          </div>
-        </div>
+    <SidebarLayout
+      title="Blocked IP Addresses"
+      description="Manage IPs blocked due to security violations"
+      icon={Shield}
+      iconGradient="from-red-500 to-orange-500"
+    >
+      <div className="max-w-6xl mx-auto">
 
         {/* Error Message */}
         {error && (
@@ -221,7 +205,7 @@ export default function BlockedIPsPage() {
             </div>
           </div>
         )}
-      </main>
-    </div>
+      </div>
+    </SidebarLayout>
   )
 }

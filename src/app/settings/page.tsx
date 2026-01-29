@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import Navigation from '@/components/Navigation'
+import SidebarLayout, { GlassCard, GlassCardContent } from '@/components/SidebarLayout'
 import { Settings, Loader2, AlertCircle, CheckCircle, Tag, Bot, MessageSquare, ExternalLink, Radio, Wrench } from 'lucide-react'
 import { usePanelName } from '@/contexts/PanelNameContext'
 
@@ -589,812 +589,805 @@ export default function SettingsPage() {
 
   if (loading) {
     return (
-      <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
-      </div>
+      <SidebarLayout title="Settings" description="Loading..." icon={Settings} iconGradient="from-blue-500 to-indigo-600">
+        <div className="flex items-center justify-center py-20">
+          <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+        </div>
+      </SidebarLayout>
     )
   }
 
   return (
-    <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-300">
-      <Navigation />
+    <SidebarLayout
+      title="Account Settings"
+      description="Update your username and password securely."
+      icon={Settings}
+      iconGradient="from-blue-500 to-indigo-600"
+    >
+      <div className="max-w-2xl mx-auto space-y-6">
+        <GlassCard>
+          <GlassCardContent>
 
-      <main className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white/80 dark:bg-gray-900/80 rounded-2xl shadow-lg shadow-gray-200/50 dark:shadow-black/40 p-6">
-          {/* Header */}
-          <div className="flex items-center space-x-3 mb-6">
-            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-2xl bg-gradient-to-tr from-blue-500 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
-              <Settings className="h-5 w-5 sm:h-6 sm:w-6" />
-            </div>
-            <div>
-              <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
-                Account Settings
-              </h1>
-              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                Update your username and password securely.
-              </p>
-            </div>
-          </div>
-
-          {/* Messages */}
-          {error && (
-            <div className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl flex items-center space-x-2">
-              <AlertCircle className="h-4 w-4 text-red-500" />
-              <p className="text-sm text-red-700 dark:text-red-300">{error}</p>
-            </div>
-          )}
-
-          {message && (
-            <div className="mb-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl flex items-center space-x-2">
-              <CheckCircle className="h-4 w-4 text-green-500" />
-              <p className="text-sm text-green-700 dark:text-green-300">{message}</p>
-            </div>
-          )}
-
-          {/* Panel Name Section - Only for Owner and Super Owner */}
-          {(auth.role === 'owner' || auth.role === 'super owner') && (
-            <div className="mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
-              <div className="flex items-center space-x-2 mb-4">
-                <Tag className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  Panel Name
-                </h2>
+            {/* Messages */}
+            {error && (
+              <div className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl flex items-center space-x-2">
+                <AlertCircle className="h-4 w-4 text-red-500" />
+                <p className="text-sm text-red-700 dark:text-red-300">{error}</p>
               </div>
+            )}
 
-              {panelNameError && (
-                <div className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl flex items-center space-x-2">
-                  <AlertCircle className="h-4 w-4 text-red-500" />
-                  <p className="text-sm text-red-700 dark:text-red-300">{panelNameError}</p>
-                </div>
-              )}
-
-              {panelNameMessage && (
-                <div className="mb-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl flex items-center space-x-2">
-                  <CheckCircle className="h-4 w-4 text-green-500" />
-                  <p className="text-sm text-green-700 dark:text-green-300">{panelNameMessage}</p>
-                </div>
-              )}
-
-              <div className="mb-4">
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Panel Name
-                </label>
-                <input
-                  type="text"
-                  value={panelNameInput}
-                  onChange={(e) => setPanelNameInput(e.target.value)}
-                  className="w-full mt-1 p-2 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-100"
-                  placeholder="Enter panel name"
-                />
-                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                  This name will appear throughout the UI (login page, dashboard, etc.)
-                </p>
+            {message && (
+              <div className="mb-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl flex items-center space-x-2">
+                <CheckCircle className="h-4 w-4 text-green-500" />
+                <p className="text-sm text-green-700 dark:text-green-300">{message}</p>
               </div>
+            )}
 
-              <button
-                onClick={handleSavePanelName}
-                disabled={savingPanelName}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
-              >
-                {savingPanelName ? (
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                ) : (
-                  'Save Panel Name'
-                )}
-              </button>
-            </div>
-          )}
-
-          {/* Telegram Bot Token Section - Only for Super Owner */}
-          {auth.role === 'super owner' && (
-            <div className="mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
-              <div className="flex items-center space-x-2 mb-4">
-                <Bot className="h-5 w-5 text-green-600 dark:text-green-400" />
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  Telegram Bot Token
-                </h2>
-              </div>
-
-              {botTokenError && (
-                <div className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl flex items-center space-x-2">
-                  <AlertCircle className="h-4 w-4 text-red-500" />
-                  <p className="text-sm text-red-700 dark:text-red-300">{botTokenError}</p>
+            {/* Panel Name Section - Only for Owner and Super Owner */}
+            {(auth.role === 'owner' || auth.role === 'super owner') && (
+              <div className="mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+                <div className="flex items-center space-x-2 mb-4">
+                  <Tag className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    Panel Name
+                  </h2>
                 </div>
-              )}
 
-              {botTokenMessage && (
-                <div className="mb-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl flex items-center space-x-2">
-                  <CheckCircle className="h-4 w-4 text-green-500" />
-                  <p className="text-sm text-green-700 dark:text-green-300">{botTokenMessage}</p>
-                </div>
-              )}
-
-              <div className="mb-4">
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
-                  Bot Token
-                </label>
-                <input
-                  type="text"
-                  value={botToken}
-                  onChange={(e) => setBotToken(e.target.value)}
-                  className="w-full p-2 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-100"
-                  placeholder="1234567890:ABCdefGHIjklMNOpqrsTUVwxyz"
-                />
-                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                  Get your bot token from @BotFather on Telegram
-                </p>
-              </div>
-
-              {botUsername && (
-                <div className="mb-4">
-                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
-                    Bot Username
-                  </label>
-                  <div className="w-full p-2 rounded-lg border bg-gray-200 dark:bg-gray-700 dark:border-gray-600 text-gray-700 dark:text-gray-200">
-                    @{botUsername}
+                {panelNameError && (
+                  <div className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl flex items-center space-x-2">
+                    <AlertCircle className="h-4 w-4 text-red-500" />
+                    <p className="text-sm text-red-700 dark:text-red-300">{panelNameError}</p>
                   </div>
-                </div>
-              )}
-
-              <div className="flex gap-2">
-                <button
-                  onClick={handleSaveBotToken}
-                  disabled={savingBotToken}
-                  className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
-                >
-                  {savingBotToken ? (
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                  ) : (
-                    'Save Bot Token'
-                  )}
-                </button>
-
-                {botToken && (
-                  <button
-                    onClick={handleSetupWebhook}
-                    disabled={settingWebhook || !botToken}
-                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
-                  >
-                    {settingWebhook ? (
-                      <Loader2 className="h-5 w-5 animate-spin" />
-                    ) : (
-                      'Setup Webhook'
-                    )}
-                  </button>
                 )}
-              </div>
 
-              {webhookError && (
-                <div className="mt-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl flex items-center space-x-2">
-                  <AlertCircle className="h-4 w-4 text-red-500" />
-                  <p className="text-sm text-red-700 dark:text-red-300">{webhookError}</p>
-                </div>
-              )}
+                {panelNameMessage && (
+                  <div className="mb-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl flex items-center space-x-2">
+                    <CheckCircle className="h-4 w-4 text-green-500" />
+                    <p className="text-sm text-green-700 dark:text-green-300">{panelNameMessage}</p>
+                  </div>
+                )}
 
-              {webhookMessage && (
-                <div className="mt-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl flex items-center space-x-2">
-                  <CheckCircle className="h-4 w-4 text-green-500" />
-                  <p className="text-sm text-green-700 dark:text-green-300">{webhookMessage}</p>
-                </div>
-              )}
-
-              {webhookUrl && (
-                <div className="mt-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-                  <p className="text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Webhook URL:</p>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 break-all">{webhookUrl}</p>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Bot Maintenance Mode Section - Only for Super Owner */}
-          {auth.role === 'super owner' && (
-            <div className="mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
-              <div className="flex items-center space-x-2 mb-4">
-                <Wrench className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  Bot Maintenance Mode
-                </h2>
-              </div>
-
-              {maintenanceError && (
-                <div className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl flex items-center space-x-2">
-                  <AlertCircle className="h-4 w-4 text-red-500" />
-                  <p className="text-sm text-red-700 dark:text-red-300">{maintenanceError}</p>
-                </div>
-              )}
-
-              {maintenanceSuccess && (
-                <div className="mb-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl flex items-center space-x-2">
-                  <CheckCircle className="h-4 w-4 text-green-500" />
-                  <p className="text-sm text-green-700 dark:text-green-300">{maintenanceSuccess}</p>
-                </div>
-              )}
-
-              <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
-                Enable maintenance mode to restrict bot access for all users (except super owner). When enabled, all users with bot access will receive the maintenance message automatically.
-              </p>
-
-              <div className="mb-4 flex items-center justify-between p-3 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600">
-                <div>
+                <div className="mb-4">
                   <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    Maintenance Mode
+                    Panel Name
                   </label>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    Enable to restrict bot access (super owner will still have access)
+                  <input
+                    type="text"
+                    value={panelNameInput}
+                    onChange={(e) => setPanelNameInput(e.target.value)}
+                    className="w-full mt-1 p-2 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-100"
+                    placeholder="Enter panel name"
+                  />
+                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    This name will appear throughout the UI (login page, dashboard, etc.)
                   </p>
                 </div>
-                <label className="relative inline-flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={maintenanceMode}
-                    onChange={(e) => setMaintenanceMode(e.target.checked)}
-                    className="sr-only peer"
-                  />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-yellow-300 dark:peer-focus:ring-yellow-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-yellow-600"></div>
-                </label>
-              </div>
 
-              <div className="mb-4">
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
-                  Maintenance Message
-                </label>
-                <textarea
-                  value={maintenanceMessage}
-                  onChange={(e) => setMaintenanceMessage(e.target.value)}
-                  rows={3}
-                  className="w-full p-3 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-100 resize-none"
-                  placeholder="Enter maintenance message..."
-                />
-                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                  Message to show to users when maintenance mode is enabled (supports HTML)
-                </p>
-              </div>
-
-              <button
-                onClick={handleSaveMaintenance}
-                disabled={savingMaintenance}
-                className="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-2 rounded-lg font-medium flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
-              >
-                {savingMaintenance ? (
-                  <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                ) : (
-                  maintenanceMode ? 'Disable Maintenance Mode' : 'Enable Maintenance Mode'
-                )}
-              </button>
-            </div>
-          )}
-
-          {/* Broadcasting Section - Only for Super Owner */}
-          {auth.role === 'super owner' && (
-            <div className="mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
-              <div className="flex items-center space-x-2 mb-4">
-                <Radio className="h-5 w-5 text-pink-600 dark:text-pink-400" />
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  Broadcasting System
-                </h2>
-              </div>
-
-              {broadcastError && (
-                <div className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl flex items-center space-x-2">
-                  <AlertCircle className="h-4 w-4 text-red-500" />
-                  <p className="text-sm text-red-700 dark:text-red-300">{broadcastError}</p>
-                </div>
-              )}
-
-              {broadcastSuccess && (
-                <div className="mb-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl flex items-center space-x-2">
-                  <CheckCircle className="h-4 w-4 text-green-500" />
-                  <p className="text-sm text-green-700 dark:text-green-300">{broadcastSuccess}</p>
-                </div>
-              )}
-
-              <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
-                Send broadcast messages to selected user roles via Telegram bot.
-              </p>
-
-              <div className="mb-4">
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
-                  Broadcast Message
-                </label>
-                <textarea
-                  value={broadcastMessage}
-                  onChange={(e) => setBroadcastMessage(e.target.value)}
-                  rows={5}
-                  className="w-full p-3 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-100 resize-none"
-                  placeholder="Enter your broadcast message here...&#10;&#10;You can use HTML formatting."
-                />
-                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                  Supports HTML formatting. All users with chat IDs in selected roles will receive this message.
-                </p>
-              </div>
-
-              <div className="mb-4">
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
-                  Target Roles
-                </label>
-                <div className="space-y-2">
-                  <label className="flex items-center space-x-2 p-2 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <input
-                      type="checkbox"
-                      checked={broadcastTargetRoles.includes('owner')}
-                      onChange={(e) => {
-                        if (e.target.checked) {
-                          setBroadcastTargetRoles([...broadcastTargetRoles, 'owner'])
-                        } else {
-                          setBroadcastTargetRoles(broadcastTargetRoles.filter(r => r !== 'owner'))
-                        }
-                      }}
-                      className="w-4 h-4 text-pink-600 rounded"
-                    />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">Owner</span>
-                  </label>
-
-                  <label className="flex items-center space-x-2 p-2 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <input
-                      type="checkbox"
-                      checked={broadcastTargetRoles.includes('admin')}
-                      onChange={(e) => {
-                        if (e.target.checked) {
-                          setBroadcastTargetRoles([...broadcastTargetRoles, 'admin'])
-                        } else {
-                          setBroadcastTargetRoles(broadcastTargetRoles.filter(r => r !== 'admin'))
-                        }
-                      }}
-                      className="w-4 h-4 text-pink-600 rounded"
-                    />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">Admin</span>
-                  </label>
-
-                  <label className="flex items-center space-x-2 p-2 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <input
-                      type="checkbox"
-                      checked={broadcastTargetRoles.includes('reseller')}
-                      onChange={(e) => {
-                        if (e.target.checked) {
-                          setBroadcastTargetRoles([...broadcastTargetRoles, 'reseller'])
-                        } else {
-                          setBroadcastTargetRoles(broadcastTargetRoles.filter(r => r !== 'reseller'))
-                        }
-                      }}
-                      className="w-4 h-4 text-pink-600 rounded"
-                    />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">Reseller</span>
-                  </label>
-                </div>
-              </div>
-
-              <button
-                onClick={handleSendBroadcast}
-                disabled={sendingBroadcast || !broadcastMessage.trim() || broadcastTargetRoles.length === 0}
-                className="w-full bg-pink-600 hover:bg-pink-700 text-white py-2 rounded-lg font-medium flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
-              >
-                {sendingBroadcast ? (
-                  <>
-                    <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                    Sending Broadcast...
-                  </>
-                ) : (
-                  'Send Broadcast'
-                )}
-              </button>
-            </div>
-          )}
-
-          {/* Bot Permissions Section - Only for Super Owner */}
-          {auth.role === 'super owner' && (
-            <div className="mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
-              <div className="flex items-center space-x-2 mb-4">
-                <Settings className="h-5 w-5 text-orange-600 dark:text-orange-400" />
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  Bot Permissions
-                </h2>
-              </div>
-
-              {permissionsError && (
-                <div className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl flex items-center space-x-2">
-                  <AlertCircle className="h-4 w-4 text-red-500" />
-                  <p className="text-sm text-red-700 dark:text-red-300">{permissionsError}</p>
-                </div>
-              )}
-
-              {permissionsMessage && (
-                <div className="mb-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl flex items-center space-x-2">
-                  <CheckCircle className="h-4 w-4 text-green-500" />
-                  <p className="text-sm text-green-700 dark:text-green-300">{permissionsMessage}</p>
-                </div>
-              )}
-
-              <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
-                Control which roles can access the Telegram bot. Toggle to hide/show bot options for each role.
-              </p>
-
-              <div className="space-y-4 mb-4">
-                <div className="flex items-center justify-between p-3 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600">
-                  <div>
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                      Owner
-                    </label>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      Allow owner role to use bot
-                    </p>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={botPermissions.owner}
-                      onChange={(e) => setBotPermissions({ ...botPermissions, owner: e.target.checked })}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                  </label>
-                </div>
-
-                <div className="flex items-center justify-between p-3 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600">
-                  <div>
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                      Admin
-                    </label>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      Allow admin role to use bot
-                    </p>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={botPermissions.admin}
-                      onChange={(e) => setBotPermissions({ ...botPermissions, admin: e.target.checked })}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                  </label>
-                </div>
-
-                <div className="flex items-center justify-between p-3 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600">
-                  <div>
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                      Reseller
-                    </label>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      Allow reseller role to use bot
-                    </p>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={botPermissions.reseller}
-                      onChange={(e) => setBotPermissions({ ...botPermissions, reseller: e.target.checked })}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                  </label>
-                </div>
-              </div>
-
-              <button
-                onClick={handleSavePermissions}
-                disabled={savingPermissions}
-                className="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 rounded-lg font-medium flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
-              >
-                {savingPermissions ? (
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                ) : (
-                  'Save Permissions'
-                )}
-              </button>
-            </div>
-          )}
-
-          {/* Owner Bot Permissions Section - Only for Owner when owner bot is enabled */}
-          {auth.role === 'owner' && canManageOwnerPermissions && (
-            <div className="mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
-              <div className="flex items-center space-x-2 mb-4">
-                <Settings className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  Admin & Reseller Bot Permissions
-                </h2>
-              </div>
-
-              {permissionsError && (
-                <div className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl flex items-center space-x-2">
-                  <AlertCircle className="h-4 w-4 text-red-500" />
-                  <p className="text-sm text-red-700 dark:text-red-300">{permissionsError}</p>
-                </div>
-              )}
-
-              {permissionsMessage && (
-                <div className="mb-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl flex items-center space-x-2">
-                  <CheckCircle className="h-4 w-4 text-green-500" />
-                  <p className="text-sm text-green-700 dark:text-green-300">{permissionsMessage}</p>
-                </div>
-              )}
-
-              <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
-                Control which roles can access the Telegram bot. Toggle to hide/show bot options for Admin and Reseller roles.
-              </p>
-
-              <div className="space-y-4 mb-4">
-                <div className="flex items-center justify-between p-3 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600">
-                  <div>
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                      Admin
-                    </label>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      Allow admin role to use bot
-                    </p>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={ownerPermissions.admin}
-                      onChange={(e) => setOwnerPermissions({ ...ownerPermissions, admin: e.target.checked })}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                  </label>
-                </div>
-
-                <div className="flex items-center justify-between p-3 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600">
-                  <div>
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                      Reseller
-                    </label>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      Allow reseller role to use bot
-                    </p>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={ownerPermissions.reseller}
-                      onChange={(e) => setOwnerPermissions({ ...ownerPermissions, reseller: e.target.checked })}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                  </label>
-                </div>
-              </div>
-
-              <button
-                onClick={handleSaveOwnerPermissions}
-                disabled={savingPermissions}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
-              >
-                {savingPermissions ? (
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                ) : (
-                  'Save Admin & Reseller Permissions'
-                )}
-              </button>
-            </div>
-          )}
-
-          {/* Telegram Chat ID Section - For All Users with Permission */}
-          {hasBotPermission && (
-            <div className="mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
-              <div className="flex items-center space-x-2 mb-4">
-                <MessageSquare className="h-5 w-5 text-purple-600 dark:text-purple-400" />
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  Telegram Chat ID
-                </h2>
-              </div>
-
-              {chatIdError && (
-                <div className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl flex items-center space-x-2">
-                  <AlertCircle className="h-4 w-4 text-red-500" />
-                  <p className="text-sm text-red-700 dark:text-red-300">{chatIdError}</p>
-                </div>
-              )}
-
-              {chatIdMessage && (
-                <div className="mb-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl flex items-center space-x-2">
-                  <CheckCircle className="h-4 w-4 text-green-500" />
-                  <p className="text-sm text-green-700 dark:text-green-300">{chatIdMessage}</p>
-                </div>
-              )}
-
-              <div className="mb-4">
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
-                  Your Chat ID
-                </label>
-                <input
-                  type="text"
-                  value={chatId}
-                  onChange={(e) => setChatId(e.target.value)}
-                  className="w-full p-2 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-100"
-                  placeholder="Enter your Telegram Chat ID (e.g., 123456789)"
-                />
-                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                  Get your Chat ID by messaging @userinfobot on Telegram
-                </p>
-              </div>
-
-              <div className="mb-4 flex gap-2">
                 <button
-                  onClick={handleSaveChatId}
-                  disabled={savingChatId}
-                  className="flex-1 bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg font-medium flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
+                  onClick={handleSavePanelName}
+                  disabled={savingPanelName}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  {savingChatId ? (
+                  {savingPanelName ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
                   ) : (
-                    'Save Chat ID'
+                    'Save Panel Name'
                   )}
                 </button>
-
-                {hasBotPermission && botUsername && botUsername.trim() !== '' && (
-                  <button
-                    onClick={handleOpenBot}
-                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium flex items-center justify-center gap-2"
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                    Open Bot
-                  </button>
-                )}
               </div>
+            )}
 
-              {/* Bot Username Section - Only for Super Owner */}
-              {auth.role === 'super owner' && (
-                <>
-                  {botUsernameError && (
-                    <div className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl flex items-center space-x-2">
-                      <AlertCircle className="h-4 w-4 text-red-500" />
-                      <p className="text-sm text-red-700 dark:text-red-300">{botUsernameError}</p>
-                    </div>
-                  )}
+            {/* Telegram Bot Token Section - Only for Super Owner */}
+            {auth.role === 'super owner' && (
+              <div className="mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+                <div className="flex items-center space-x-2 mb-4">
+                  <Bot className="h-5 w-5 text-green-600 dark:text-green-400" />
+                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    Telegram Bot Token
+                  </h2>
+                </div>
 
-                  {botUsernameMessage && (
-                    <div className="mb-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl flex items-center space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-500" />
-                      <p className="text-sm text-green-700 dark:text-green-300">{botUsernameMessage}</p>
-                    </div>
-                  )}
+                {botTokenError && (
+                  <div className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl flex items-center space-x-2">
+                    <AlertCircle className="h-4 w-4 text-red-500" />
+                    <p className="text-sm text-red-700 dark:text-red-300">{botTokenError}</p>
+                  </div>
+                )}
 
+                {botTokenMessage && (
+                  <div className="mb-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl flex items-center space-x-2">
+                    <CheckCircle className="h-4 w-4 text-green-500" />
+                    <p className="text-sm text-green-700 dark:text-green-300">{botTokenMessage}</p>
+                  </div>
+                )}
+
+                <div className="mb-4">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
+                    Bot Token
+                  </label>
+                  <input
+                    type="text"
+                    value={botToken}
+                    onChange={(e) => setBotToken(e.target.value)}
+                    className="w-full p-2 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-100"
+                    placeholder="1234567890:ABCdefGHIjklMNOpqrsTUVwxyz"
+                  />
+                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    Get your bot token from @BotFather on Telegram
+                  </p>
+                </div>
+
+                {botUsername && (
                   <div className="mb-4">
                     <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
                       Bot Username
                     </label>
-                    <input
-                      type="text"
-                      value={botUsernameInput}
-                      onChange={(e) => setBotUsernameInput(e.target.value)}
-                      className="w-full p-2 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-100"
-                      placeholder="Enter bot username (without @)"
-                    />
-                    <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                      Bot username without @ symbol (e.g., mybot instead of @mybot)
-                    </p>
+                    <div className="w-full p-2 rounded-lg border bg-gray-200 dark:bg-gray-700 dark:border-gray-600 text-gray-700 dark:text-gray-200">
+                      @{botUsername}
+                    </div>
                   </div>
+                )}
 
+                <div className="flex gap-2">
                   <button
-                    onClick={handleSaveBotUsername}
-                    disabled={savingBotUsername || !botUsernameInput.trim()}
-                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg font-medium flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed mb-4"
+                    onClick={handleSaveBotToken}
+                    disabled={savingBotToken}
+                    className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
                   >
-                    {savingBotUsername ? (
+                    {savingBotToken ? (
                       <Loader2 className="h-5 w-5 animate-spin" />
                     ) : (
-                      'Save Bot Username'
+                      'Save Bot Token'
                     )}
                   </button>
-                </>
-              )}
 
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                After updating your Chat ID, you can use the bot to generate keys via Telegram.
-              </p>
-            </div>
-          )}
-
-          {/* Permission Denied Message */}
-          {!hasBotPermission && (
-            <div className="mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
-              <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-xl">
-                <div className="flex items-center space-x-2 mb-2">
-                  <AlertCircle className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
-                  <h3 className="text-sm font-semibold text-yellow-800 dark:text-yellow-200">
-                    Bot Access Restricted
-                  </h3>
+                  {botToken && (
+                    <button
+                      onClick={handleSetupWebhook}
+                      disabled={settingWebhook || !botToken}
+                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
+                    >
+                      {settingWebhook ? (
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                      ) : (
+                        'Setup Webhook'
+                      )}
+                    </button>
+                  )}
                 </div>
-                <p className="text-sm text-yellow-700 dark:text-yellow-300">
-                  Your role ({auth.role}) does not have permission to access the Telegram bot. Please contact administrator to enable bot access for your role.
+
+                {webhookError && (
+                  <div className="mt-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl flex items-center space-x-2">
+                    <AlertCircle className="h-4 w-4 text-red-500" />
+                    <p className="text-sm text-red-700 dark:text-red-300">{webhookError}</p>
+                  </div>
+                )}
+
+                {webhookMessage && (
+                  <div className="mt-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl flex items-center space-x-2">
+                    <CheckCircle className="h-4 w-4 text-green-500" />
+                    <p className="text-sm text-green-700 dark:text-green-300">{webhookMessage}</p>
+                  </div>
+                )}
+
+                {webhookUrl && (
+                  <div className="mt-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+                    <p className="text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Webhook URL:</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400 break-all">{webhookUrl}</p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Bot Maintenance Mode Section - Only for Super Owner */}
+            {auth.role === 'super owner' && (
+              <div className="mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+                <div className="flex items-center space-x-2 mb-4">
+                  <Wrench className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
+                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    Bot Maintenance Mode
+                  </h2>
+                </div>
+
+                {maintenanceError && (
+                  <div className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl flex items-center space-x-2">
+                    <AlertCircle className="h-4 w-4 text-red-500" />
+                    <p className="text-sm text-red-700 dark:text-red-300">{maintenanceError}</p>
+                  </div>
+                )}
+
+                {maintenanceSuccess && (
+                  <div className="mb-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl flex items-center space-x-2">
+                    <CheckCircle className="h-4 w-4 text-green-500" />
+                    <p className="text-sm text-green-700 dark:text-green-300">{maintenanceSuccess}</p>
+                  </div>
+                )}
+
+                <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+                  Enable maintenance mode to restrict bot access for all users (except super owner). When enabled, all users with bot access will receive the maintenance message automatically.
+                </p>
+
+                <div className="mb-4 flex items-center justify-between p-3 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600">
+                  <div>
+                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                      Maintenance Mode
+                    </label>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      Enable to restrict bot access (super owner will still have access)
+                    </p>
+                  </div>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={maintenanceMode}
+                      onChange={(e) => setMaintenanceMode(e.target.checked)}
+                      className="sr-only peer"
+                    />
+                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-yellow-300 dark:peer-focus:ring-yellow-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-yellow-600"></div>
+                  </label>
+                </div>
+
+                <div className="mb-4">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
+                    Maintenance Message
+                  </label>
+                  <textarea
+                    value={maintenanceMessage}
+                    onChange={(e) => setMaintenanceMessage(e.target.value)}
+                    rows={3}
+                    className="w-full p-3 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-100 resize-none"
+                    placeholder="Enter maintenance message..."
+                  />
+                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    Message to show to users when maintenance mode is enabled (supports HTML)
+                  </p>
+                </div>
+
+                <button
+                  onClick={handleSaveMaintenance}
+                  disabled={savingMaintenance}
+                  className="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-2 rounded-lg font-medium flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                  {savingMaintenance ? (
+                    <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                  ) : (
+                    maintenanceMode ? 'Disable Maintenance Mode' : 'Enable Maintenance Mode'
+                  )}
+                </button>
+              </div>
+            )}
+
+            {/* Broadcasting Section - Only for Super Owner */}
+            {auth.role === 'super owner' && (
+              <div className="mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+                <div className="flex items-center space-x-2 mb-4">
+                  <Radio className="h-5 w-5 text-pink-600 dark:text-pink-400" />
+                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    Broadcasting System
+                  </h2>
+                </div>
+
+                {broadcastError && (
+                  <div className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl flex items-center space-x-2">
+                    <AlertCircle className="h-4 w-4 text-red-500" />
+                    <p className="text-sm text-red-700 dark:text-red-300">{broadcastError}</p>
+                  </div>
+                )}
+
+                {broadcastSuccess && (
+                  <div className="mb-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl flex items-center space-x-2">
+                    <CheckCircle className="h-4 w-4 text-green-500" />
+                    <p className="text-sm text-green-700 dark:text-green-300">{broadcastSuccess}</p>
+                  </div>
+                )}
+
+                <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+                  Send broadcast messages to selected user roles via Telegram bot.
+                </p>
+
+                <div className="mb-4">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
+                    Broadcast Message
+                  </label>
+                  <textarea
+                    value={broadcastMessage}
+                    onChange={(e) => setBroadcastMessage(e.target.value)}
+                    rows={5}
+                    className="w-full p-3 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-100 resize-none"
+                    placeholder="Enter your broadcast message here...&#10;&#10;You can use HTML formatting."
+                  />
+                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    Supports HTML formatting. All users with chat IDs in selected roles will receive this message.
+                  </p>
+                </div>
+
+                <div className="mb-4">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
+                    Target Roles
+                  </label>
+                  <div className="space-y-2">
+                    <label className="flex items-center space-x-2 p-2 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700">
+                      <input
+                        type="checkbox"
+                        checked={broadcastTargetRoles.includes('owner')}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setBroadcastTargetRoles([...broadcastTargetRoles, 'owner'])
+                          } else {
+                            setBroadcastTargetRoles(broadcastTargetRoles.filter(r => r !== 'owner'))
+                          }
+                        }}
+                        className="w-4 h-4 text-pink-600 rounded"
+                      />
+                      <span className="text-sm text-gray-700 dark:text-gray-300">Owner</span>
+                    </label>
+
+                    <label className="flex items-center space-x-2 p-2 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700">
+                      <input
+                        type="checkbox"
+                        checked={broadcastTargetRoles.includes('admin')}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setBroadcastTargetRoles([...broadcastTargetRoles, 'admin'])
+                          } else {
+                            setBroadcastTargetRoles(broadcastTargetRoles.filter(r => r !== 'admin'))
+                          }
+                        }}
+                        className="w-4 h-4 text-pink-600 rounded"
+                      />
+                      <span className="text-sm text-gray-700 dark:text-gray-300">Admin</span>
+                    </label>
+
+                    <label className="flex items-center space-x-2 p-2 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700">
+                      <input
+                        type="checkbox"
+                        checked={broadcastTargetRoles.includes('reseller')}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setBroadcastTargetRoles([...broadcastTargetRoles, 'reseller'])
+                          } else {
+                            setBroadcastTargetRoles(broadcastTargetRoles.filter(r => r !== 'reseller'))
+                          }
+                        }}
+                        className="w-4 h-4 text-pink-600 rounded"
+                      />
+                      <span className="text-sm text-gray-700 dark:text-gray-300">Reseller</span>
+                    </label>
+                  </div>
+                </div>
+
+                <button
+                  onClick={handleSendBroadcast}
+                  disabled={sendingBroadcast || !broadcastMessage.trim() || broadcastTargetRoles.length === 0}
+                  className="w-full bg-pink-600 hover:bg-pink-700 text-white py-2 rounded-lg font-medium flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                  {sendingBroadcast ? (
+                    <>
+                      <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                      Sending Broadcast...
+                    </>
+                  ) : (
+                    'Send Broadcast'
+                  )}
+                </button>
+              </div>
+            )}
+
+            {/* Bot Permissions Section - Only for Super Owner */}
+            {auth.role === 'super owner' && (
+              <div className="mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+                <div className="flex items-center space-x-2 mb-4">
+                  <Settings className="h-5 w-5 text-orange-600 dark:text-orange-400" />
+                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    Bot Permissions
+                  </h2>
+                </div>
+
+                {permissionsError && (
+                  <div className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl flex items-center space-x-2">
+                    <AlertCircle className="h-4 w-4 text-red-500" />
+                    <p className="text-sm text-red-700 dark:text-red-300">{permissionsError}</p>
+                  </div>
+                )}
+
+                {permissionsMessage && (
+                  <div className="mb-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl flex items-center space-x-2">
+                    <CheckCircle className="h-4 w-4 text-green-500" />
+                    <p className="text-sm text-green-700 dark:text-green-300">{permissionsMessage}</p>
+                  </div>
+                )}
+
+                <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+                  Control which roles can access the Telegram bot. Toggle to hide/show bot options for each role.
+                </p>
+
+                <div className="space-y-4 mb-4">
+                  <div className="flex items-center justify-between p-3 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600">
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Owner
+                      </label>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        Allow owner role to use bot
+                      </p>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={botPermissions.owner}
+                        onChange={(e) => setBotPermissions({ ...botPermissions, owner: e.target.checked })}
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                    </label>
+                  </div>
+
+                  <div className="flex items-center justify-between p-3 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600">
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Admin
+                      </label>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        Allow admin role to use bot
+                      </p>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={botPermissions.admin}
+                        onChange={(e) => setBotPermissions({ ...botPermissions, admin: e.target.checked })}
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                    </label>
+                  </div>
+
+                  <div className="flex items-center justify-between p-3 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600">
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Reseller
+                      </label>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        Allow reseller role to use bot
+                      </p>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={botPermissions.reseller}
+                        onChange={(e) => setBotPermissions({ ...botPermissions, reseller: e.target.checked })}
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                    </label>
+                  </div>
+                </div>
+
+                <button
+                  onClick={handleSavePermissions}
+                  disabled={savingPermissions}
+                  className="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 rounded-lg font-medium flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                  {savingPermissions ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                    'Save Permissions'
+                  )}
+                </button>
+              </div>
+            )}
+
+            {/* Owner Bot Permissions Section - Only for Owner when owner bot is enabled */}
+            {auth.role === 'owner' && canManageOwnerPermissions && (
+              <div className="mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+                <div className="flex items-center space-x-2 mb-4">
+                  <Settings className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    Admin & Reseller Bot Permissions
+                  </h2>
+                </div>
+
+                {permissionsError && (
+                  <div className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl flex items-center space-x-2">
+                    <AlertCircle className="h-4 w-4 text-red-500" />
+                    <p className="text-sm text-red-700 dark:text-red-300">{permissionsError}</p>
+                  </div>
+                )}
+
+                {permissionsMessage && (
+                  <div className="mb-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl flex items-center space-x-2">
+                    <CheckCircle className="h-4 w-4 text-green-500" />
+                    <p className="text-sm text-green-700 dark:text-green-300">{permissionsMessage}</p>
+                  </div>
+                )}
+
+                <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+                  Control which roles can access the Telegram bot. Toggle to hide/show bot options for Admin and Reseller roles.
+                </p>
+
+                <div className="space-y-4 mb-4">
+                  <div className="flex items-center justify-between p-3 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600">
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Admin
+                      </label>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        Allow admin role to use bot
+                      </p>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={ownerPermissions.admin}
+                        onChange={(e) => setOwnerPermissions({ ...ownerPermissions, admin: e.target.checked })}
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                    </label>
+                  </div>
+
+                  <div className="flex items-center justify-between p-3 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600">
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Reseller
+                      </label>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        Allow reseller role to use bot
+                      </p>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={ownerPermissions.reseller}
+                        onChange={(e) => setOwnerPermissions({ ...ownerPermissions, reseller: e.target.checked })}
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                    </label>
+                  </div>
+                </div>
+
+                <button
+                  onClick={handleSaveOwnerPermissions}
+                  disabled={savingPermissions}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                  {savingPermissions ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                    'Save Admin & Reseller Permissions'
+                  )}
+                </button>
+              </div>
+            )}
+
+            {/* Telegram Chat ID Section - For All Users with Permission */}
+            {hasBotPermission && (
+              <div className="mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+                <div className="flex items-center space-x-2 mb-4">
+                  <MessageSquare className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    Telegram Chat ID
+                  </h2>
+                </div>
+
+                {chatIdError && (
+                  <div className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl flex items-center space-x-2">
+                    <AlertCircle className="h-4 w-4 text-red-500" />
+                    <p className="text-sm text-red-700 dark:text-red-300">{chatIdError}</p>
+                  </div>
+                )}
+
+                {chatIdMessage && (
+                  <div className="mb-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl flex items-center space-x-2">
+                    <CheckCircle className="h-4 w-4 text-green-500" />
+                    <p className="text-sm text-green-700 dark:text-green-300">{chatIdMessage}</p>
+                  </div>
+                )}
+
+                <div className="mb-4">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
+                    Your Chat ID
+                  </label>
+                  <input
+                    type="text"
+                    value={chatId}
+                    onChange={(e) => setChatId(e.target.value)}
+                    className="w-full p-2 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-100"
+                    placeholder="Enter your Telegram Chat ID (e.g., 123456789)"
+                  />
+                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    Get your Chat ID by messaging @userinfobot on Telegram
+                  </p>
+                </div>
+
+                <div className="mb-4 flex gap-2">
+                  <button
+                    onClick={handleSaveChatId}
+                    disabled={savingChatId}
+                    className="flex-1 bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg font-medium flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
+                  >
+                    {savingChatId ? (
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                      'Save Chat ID'
+                    )}
+                  </button>
+
+                  {hasBotPermission && botUsername && botUsername.trim() !== '' && (
+                    <button
+                      onClick={handleOpenBot}
+                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium flex items-center justify-center gap-2"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                      Open Bot
+                    </button>
+                  )}
+                </div>
+
+                {/* Bot Username Section - Only for Super Owner */}
+                {auth.role === 'super owner' && (
+                  <>
+                    {botUsernameError && (
+                      <div className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl flex items-center space-x-2">
+                        <AlertCircle className="h-4 w-4 text-red-500" />
+                        <p className="text-sm text-red-700 dark:text-red-300">{botUsernameError}</p>
+                      </div>
+                    )}
+
+                    {botUsernameMessage && (
+                      <div className="mb-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl flex items-center space-x-2">
+                        <CheckCircle className="h-4 w-4 text-green-500" />
+                        <p className="text-sm text-green-700 dark:text-green-300">{botUsernameMessage}</p>
+                      </div>
+                    )}
+
+                    <div className="mb-4">
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
+                        Bot Username
+                      </label>
+                      <input
+                        type="text"
+                        value={botUsernameInput}
+                        onChange={(e) => setBotUsernameInput(e.target.value)}
+                        className="w-full p-2 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-100"
+                        placeholder="Enter bot username (without @)"
+                      />
+                      <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                        Bot username without @ symbol (e.g., mybot instead of @mybot)
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={handleSaveBotUsername}
+                      disabled={savingBotUsername || !botUsernameInput.trim()}
+                      className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg font-medium flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed mb-4"
+                    >
+                      {savingBotUsername ? (
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                      ) : (
+                        'Save Bot Username'
+                      )}
+                    </button>
+                  </>
+                )}
+
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  After updating your Chat ID, you can use the bot to generate keys via Telegram.
                 </p>
               </div>
-            </div>
-          )}
-
-          {/* Account Settings Section - Only show heading for Owner and Super Owner */}
-          {(auth.role === 'owner' || auth.role === 'super owner') && (
-            <div className="mb-6">
-              <div className="flex items-center space-x-2 mb-4">
-                <Settings className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  Account Settings
-                </h2>
-              </div>
-            </div>
-          )}
-
-          {/* Current Username */}
-          <div className="mb-4">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Current Username
-            </label>
-            <input
-              value={currentUsername}
-              disabled
-              className="w-full mt-1 p-2 rounded-lg border bg-gray-200 dark:bg-gray-700 dark:border-gray-600 text-gray-700 dark:text-gray-200"
-            />
-          </div>
-
-          {/* Enter New Username */}
-          <div className="mb-4">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Enter New Username
-            </label>
-            <input
-              value={newUsername}
-              onChange={(e) => setNewUsername(e.target.value)}
-              className="w-full mt-1 p-2 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-100"
-              placeholder="New username"
-            />
-          </div>
-
-          {/* Enter Old Password */}
-          <div className="mb-4">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Enter Old Password
-            </label>
-            <input
-              type="password"
-              value={oldPassword}
-              onChange={(e) => setOldPassword(e.target.value)}
-              className="w-full mt-1 p-2 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-100"
-              placeholder="Old password"
-            />
-          </div>
-
-          {/* Enter New Password */}
-          <div className="mb-4">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Enter New Password
-            </label>
-            <input
-              type="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              className="w-full mt-1 p-2 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-100"
-              placeholder="New password"
-            />
-          </div>
-
-          {/* Confirm Password */}
-          <div className="mb-6">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Confirm New Password
-            </label>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full mt-1 p-2 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-100"
-              placeholder="Confirm new password"
-            />
-          </div>
-
-          <button
-            onClick={handleSave}
-            disabled={saving}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
-          >
-            {saving ? (
-              <Loader2 className="h-5 w-5 animate-spin" />
-            ) : (
-              'Save Changes'
             )}
-          </button>
-        </div>
-      </main>
-    </div>
+
+            {/* Permission Denied Message */}
+            {!hasBotPermission && (
+              <div className="mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+                <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-xl">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <AlertCircle className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
+                    <h3 className="text-sm font-semibold text-yellow-800 dark:text-yellow-200">
+                      Bot Access Restricted
+                    </h3>
+                  </div>
+                  <p className="text-sm text-yellow-700 dark:text-yellow-300">
+                    Your role ({auth.role}) does not have permission to access the Telegram bot. Please contact administrator to enable bot access for your role.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Account Settings Section - Only show heading for Owner and Super Owner */}
+            {(auth.role === 'owner' || auth.role === 'super owner') && (
+              <div className="mb-6">
+                <div className="flex items-center space-x-2 mb-4">
+                  <Settings className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    Account Settings
+                  </h2>
+                </div>
+              </div>
+            )}
+
+            {/* Current Username */}
+            <div className="mb-4">
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Current Username
+              </label>
+              <input
+                value={currentUsername}
+                disabled
+                className="w-full mt-1 p-2 rounded-lg border bg-gray-200 dark:bg-gray-700 dark:border-gray-600 text-gray-700 dark:text-gray-200"
+              />
+            </div>
+
+            {/* Enter New Username */}
+            <div className="mb-4">
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Enter New Username
+              </label>
+              <input
+                value={newUsername}
+                onChange={(e) => setNewUsername(e.target.value)}
+                className="w-full mt-1 p-2 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-100"
+                placeholder="New username"
+              />
+            </div>
+
+            {/* Enter Old Password */}
+            <div className="mb-4">
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Enter Old Password
+              </label>
+              <input
+                type="password"
+                value={oldPassword}
+                onChange={(e) => setOldPassword(e.target.value)}
+                className="w-full mt-1 p-2 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-100"
+                placeholder="Old password"
+              />
+            </div>
+
+            {/* Enter New Password */}
+            <div className="mb-4">
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Enter New Password
+              </label>
+              <input
+                type="password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                className="w-full mt-1 p-2 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-100"
+                placeholder="New password"
+              />
+            </div>
+
+            {/* Confirm Password */}
+            <div className="mb-6">
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Confirm New Password
+              </label>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full mt-1 p-2 rounded-lg border bg-gray-50 dark:bg-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-100"
+                placeholder="Confirm new password"
+              />
+            </div>
+
+            <button
+              onClick={handleSave}
+              disabled={saving}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              {saving ? (
+                <Loader2 className="h-5 w-5 animate-spin" />
+              ) : (
+                'Save Changes'
+              )}
+            </button>
+          </GlassCardContent>
+        </GlassCard>
+      </div>
+    </SidebarLayout>
   )
 }

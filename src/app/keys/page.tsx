@@ -295,37 +295,8 @@ function KeysPageContent() {
       <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-300">
         <Navigation />
         <div className="max-w-7xl mx-auto py-4 sm:py-6 px-3 sm:px-4 sm:px-6 lg:px-8">
-          <div className="px-2 sm:px-4 py-4 sm:py-6 sm:px-0">
-            <div className="animate-pulse mb-6 sm:mb-8">
-              <div className="h-6 sm:h-8 bg-gray-200 dark:bg-gray-700 rounded-xl w-1/2 sm:w-1/4 mb-3 sm:mb-4"></div>
-              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 sm:w-1/2"></div>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm overflow-hidden shadow-lg rounded-2xl border border-gray-200/50 dark:border-gray-700/50">
-                  <div className="p-4 sm:p-6">
-                    <div className="flex items-center justify-between">
-                      <div className="h-10 w-10 sm:h-12 sm:w-12 bg-gray-200 dark:bg-gray-600 rounded-xl"></div>
-                      <div className="h-5 w-12 sm:h-6 sm:w-16 bg-gray-200 dark:bg-gray-600 rounded-full"></div>
-                    </div>
-                    <div className="mt-3 sm:mt-4 space-y-2">
-                      <div className="h-3 sm:h-4 bg-gray-200 dark:bg-gray-600 rounded w-3/4"></div>
-                      <div className="h-6 sm:h-8 bg-gray-200 dark:bg-gray-600 rounded w-1/2"></div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-gray-200/50 dark:border-gray-700/50">
-              <div className="h-5 sm:h-6 bg-gray-200 dark:bg-gray-600 rounded w-1/3 mb-3 sm:mb-4"></div>
-              <div className="space-y-3 sm:space-y-4">
-                {[...Array(5)].map((_, i) => (
-                  <div key={i} className="h-14 sm:h-16 bg-gray-200 dark:bg-gray-600 rounded-xl"></div>
-                ))}
-              </div>
-            </div>
+          <div className="flex items-center justify-center py-20">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
           </div>
         </div>
       </div>
@@ -335,9 +306,9 @@ function KeysPageContent() {
   return (
     <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-300">
       <Navigation />
-
       <div className="max-w-7xl mx-auto py-4 sm:py-6 px-3 sm:px-4 sm:px-6 lg:px-8">
-        <div className="px-2 sm:px-4 py-4 sm:py-6 sm:px-0 flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 sm:mb-8 space-y-3 sm:space-y-0">
+        {/* Header */}
+        <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-2xl bg-gradient-to-tr from-blue-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
               <KeyIcon className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -351,24 +322,22 @@ function KeysPageContent() {
               </p>
             </div>
           </div>
-
           <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
-            {/* Extend Key button - Only for Super Owner, Owner and Admin, not Reseller */}
             {(auth.role === 'owner' || auth.role === 'admin' || auth.role === 'super owner') && (
               <button
                 onClick={() => setShowExtendModal(true)}
-                className="group relative flex items-center justify-center space-x-2 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-4 sm:px-6 py-2 rounded-xl text-xs sm:text-sm font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+                className="group relative flex items-center justify-center space-x-2 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-4 sm:px-6 py-2 rounded-xl text-xs sm:text-sm font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                <Clock className="h-3 w-3 sm:h-4 sm:w-4 group-hover:scale-110 transition-transform duration-300" />
+                <Clock className="h-4 w-4" />
                 <span>Extend Key</span>
               </button>
             )}
             <Link
               href="/generate-key"
-              className="group relative flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-4 sm:px-6 py-2 rounded-xl text-xs sm:text-sm font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+              className="group relative flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-4 sm:px-6 py-2 rounded-xl text-xs sm:text-sm font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
             >
-              <Plus className="h-3 w-3 sm:h-4 sm:w-4 group-hover:scale-110 transition-transform duration-300" />
-              <span>Generate New Key</span>
+              <Plus className="h-4 w-4" />
+              <span>Generate Key</span>
             </Link>
           </div>
         </div>
@@ -466,40 +435,46 @@ function KeysPageContent() {
 
 
 
-      {showSuccessModal && generatedKeyData && (
-        <GenerateKeySuccessModal
-          keyData={generatedKeyData}
-          onClose={() => {
-            setShowSuccessModal(false)
-            setGeneratedKeyData(null)
-          }}
-        />
-      )}
+      {
+        showSuccessModal && generatedKeyData && (
+          <GenerateKeySuccessModal
+            keyData={generatedKeyData}
+            onClose={() => {
+              setShowSuccessModal(false)
+              setGeneratedKeyData(null)
+            }}
+          />
+        )
+      }
 
-      {showDetailsModal && selectedKey && (
-        <KeyDetailsModal
-          keyData={selectedKey}
-          onClose={() => {
-            setShowDetailsModal(false)
-            setSelectedKey(null)
-          }}
-          onEdit={() => {
-            setShowDetailsModal(false)
-            handleEditKey(selectedKey)
-          }}
-        />
-      )}
+      {
+        showDetailsModal && selectedKey && (
+          <KeyDetailsModal
+            keyData={selectedKey}
+            onClose={() => {
+              setShowDetailsModal(false)
+              setSelectedKey(null)
+            }}
+            onEdit={() => {
+              setShowDetailsModal(false)
+              handleEditKey(selectedKey)
+            }}
+          />
+        )
+      }
 
-      {showEditModal && selectedKey && (
-        <EditKeyModal
-          keyData={selectedKey}
-          onClose={() => {
-            setShowEditModal(false)
-            setSelectedKey(null)
-          }}
-          onSave={handleSaveKey}
-        />
-      )}
+      {
+        showEditModal && selectedKey && (
+          <EditKeyModal
+            keyData={selectedKey}
+            onClose={() => {
+              setShowEditModal(false)
+              setSelectedKey(null)
+            }}
+            onSave={handleSaveKey}
+          />
+        )
+      }
 
       {showExtendModal && (
         <ExtendKeyModal
@@ -522,10 +497,8 @@ export default function KeysPage() {
       <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-300">
         <Navigation />
         <div className="max-w-7xl mx-auto py-4 sm:py-6 px-3 sm:px-4 sm:px-6 lg:px-8">
-          <div className="px-2 sm:px-4 py-4 sm:py-6 sm:px-0">
-            <div className="animate-pulse">
-              <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded-xl w-1/4 mb-4"></div>
-            </div>
+          <div className="animate-pulse">
+            <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded-xl w-1/4 mb-4"></div>
           </div>
         </div>
       </div>
