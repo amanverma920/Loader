@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Eye, EyeOff, AlertCircle, CheckCircle, Shield, Loader2 } from 'lucide-react'
+import { Eye, EyeOff, AlertCircle, CheckCircle, Shield, Loader2, Key, BarChart3, Users, Zap } from 'lucide-react'
 import { usePanelName } from '@/contexts/PanelNameContext'
 
 export default function LoginPage() {
@@ -47,7 +47,6 @@ export default function LoginPage() {
       const data = await response.json()
 
       if (!response.ok || !data.success) {
-        // Check if account is expired
         if (data.accountExpired) {
           setError('Your account has expired. Please contact the administrator.')
         } else {
@@ -68,31 +67,99 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-slate-50 to-purple-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-indigo-400/20 to-pink-400/20 rounded-full blur-3xl" />
+    <div className="min-h-screen flex flex-col lg:flex-row">
+      {/* Left Side - Branding Panel */}
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-20 left-20 w-72 h-72 bg-white rounded-full blur-3xl" />
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-blue-300 rounded-full blur-3xl" />
+          <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-purple-300 rounded-full blur-3xl" />
+        </div>
+
+        {/* Grid Pattern Overlay */}
+        <div className="absolute inset-0 opacity-5" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        }} />
+
+        {/* Content */}
+        <div className="relative z-10 flex flex-col justify-center items-center w-full p-12 text-white">
+          {/* Logo */}
+          <div className="mb-8">
+            <div className="h-20 w-20 rounded-2xl bg-white/20 backdrop-blur-xl flex items-center justify-center shadow-2xl border border-white/20">
+              <Shield className="h-10 w-10 text-white" />
+            </div>
+          </div>
+
+          {/* Brand Name */}
+          <h1 className="text-4xl font-bold mb-4 text-center">
+            {panelName || 'NexPanel'}
+          </h1>
+          <p className="text-lg text-blue-100 dark:text-gray-300 text-center mb-12 max-w-md">
+            Professional admin panel for managing users, keys, and analytics with ease.
+          </p>
+
+          {/* Features */}
+          <div className="space-y-6 w-full max-w-sm">
+            <div className="flex items-center space-x-4 bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+              <div className="h-12 w-12 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
+                <Key className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 className="font-semibold">Key Management</h3>
+                <p className="text-sm text-blue-100 dark:text-gray-400">Generate and manage API keys</p>
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-4 bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+              <div className="h-12 w-12 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
+                <BarChart3 className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 className="font-semibold">Analytics Dashboard</h3>
+                <p className="text-sm text-blue-100 dark:text-gray-400">Real-time traffic monitoring</p>
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-4 bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+              <div className="h-12 w-12 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
+                <Users className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 className="font-semibold">User Management</h3>
+                <p className="text-sm text-blue-100 dark:text-gray-400">Track devices and activities</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="relative max-w-md w-full space-y-8">
-        <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl rounded-3xl p-8 border border-white/20 dark:border-gray-700/20 shadow-2xl shadow-blue-500/5 dark:shadow-black/40">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-500 text-white shadow-lg shadow-blue-500/40 mb-4">
-              <Shield className="h-8 w-8" />
+      {/* Right Side - Login Form */}
+      <div className="flex-1 lg:w-1/2 flex items-center justify-center p-6 sm:p-8 lg:p-12 bg-gray-50 dark:bg-slate-950">
+        {/* Mobile Header - Only visible on mobile */}
+        <div className="lg:hidden absolute top-0 left-0 right-0 p-6 flex items-center justify-center">
+          <div className="flex items-center space-x-3">
+            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+              <Shield className="h-5 w-5 text-white" />
             </div>
-            <h1 className="text-2xl font-semibold text-gray-900 dark:text-white tracking-tight">
-              {panelName || 'NexPanel'} Login
-            </h1>
-            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-              Secure access to your admin dashboard
+            <span className="text-xl font-bold text-gray-900 dark:text-white">{panelName || 'NexPanel'}</span>
+          </div>
+        </div>
+
+        <div className="w-full max-w-md mt-16 lg:mt-0">
+          {/* Form Header */}
+          <div className="text-center lg:text-left mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+              Welcome back
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400">
+              Sign in to access your dashboard
             </p>
           </div>
 
           {/* Alerts */}
           {error && (
-            <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl flex items-center space-x-3 shadow-lg">
+            <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl flex items-center space-x-3">
               <AlertCircle className="h-5 w-5 text-red-500 flex-shrink-0" />
               <p className="text-red-700 dark:text-red-300 text-sm font-medium">
                 {error}
@@ -101,7 +168,7 @@ export default function LoginPage() {
           )}
 
           {success && (
-            <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl flex items-center space-x-3 shadow-lg">
+            <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl flex items-center space-x-3">
               <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
               <p className="text-green-700 dark:text-green-300 text-sm font-medium">
                 {success}
@@ -109,7 +176,7 @@ export default function LoginPage() {
             </div>
           )}
 
-          {/* Login form */}
+          {/* Login Form */}
           <form className="space-y-5" onSubmit={handleSubmit}>
             <div className="space-y-2">
               <label
@@ -126,7 +193,7 @@ export default function LoginPage() {
                 required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-xl bg-white/80 dark:bg-gray-900/80 text-gray-900 dark:text-white text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70 transition-all"
+                className="w-full px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70 transition-all"
                 placeholder="Enter your username"
                 disabled={isLoading}
               />
@@ -148,7 +215,7 @@ export default function LoginPage() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 pr-12 border border-gray-200 dark:border-gray-700 rounded-xl bg-white/80 dark:bg-gray-900/80 text-gray-900 dark:text-white text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70 transition-all"
+                  className="w-full px-4 py-3 pr-12 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/70 focus:border-blue-500/70 transition-all"
                   placeholder="Enter your password"
                   disabled={isLoading}
                 />
@@ -169,7 +236,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="group w-full flex justify-center py-3 px-4 text-sm font-semibold rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/40 hover:shadow-xl hover:from-blue-500 hover:to-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+              className="group w-full flex justify-center py-3 px-4 text-sm font-semibold rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/30 hover:shadow-xl hover:from-blue-500 hover:to-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-60 disabled:cursor-not-allowed transition-all"
             >
               {isLoading ? (
                 <>
@@ -181,9 +248,15 @@ export default function LoginPage() {
               )}
             </button>
 
-            {/* Register link */}
-            <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 pt-2">
-              <span>Don&apos;t have an account?</span>
+            {/* Links */}
+            <div className="flex items-center justify-between text-sm pt-2">
+              <button
+                type="button"
+                onClick={() => router.push('/forgot-password')}
+                className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
+              >
+                Forgot Password?
+              </button>
               <button
                 type="button"
                 onClick={() => router.push('/register')}
@@ -193,18 +266,6 @@ export default function LoginPage() {
               </button>
             </div>
           </form>
-
-          {/* Forgot Password Button */}
-          <div className="mt-4 text-center">
-            <button
-              type="button"
-              onClick={() => router.push('/forgot-password')}
-              className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
-            >
-              Forgot Password?
-            </button>
-          </div>
-
 
           {/* Footer */}
           <div className="mt-8 text-center">

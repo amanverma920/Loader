@@ -57,7 +57,7 @@ function KeysPageContent() {
     if (searchParams?.get('generate') === 'true') {
       router.push('/generate-key')
     }
-  }, [searchParams, auth.role])
+  }, [searchParams, auth.role, router])
 
   const loadKeys = async () => {
     try {
