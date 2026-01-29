@@ -2,6 +2,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { Shield, LogOut, BarChart3, Key, Wallet, Users, Menu, X, Settings, User, Clock, Lock, Server, Power, Plus } from 'lucide-react'
 import { useEffect, useState } from 'react'
@@ -174,26 +175,13 @@ export default function Navigation() {
           >
             <div className="flex items-center justify-center h-9 w-9 rounded-2xl bg-gradient-to-tr from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/40 overflow-hidden relative">
               {logoUrl && logoUrl !== '/images/logo.svg' ? (
-                <img
+                <Image
                   src={logoUrl}
                   alt={`${panelName || 'NexPanel'} Logo`}
+                  width={36}
+                  height={36}
                   className="w-full h-full object-contain"
-                  onError={(e) => {
-                    // Fallback to icon if image fails to load
-                    const target = e.target as HTMLImageElement
-                    target.style.display = 'none'
-                    const parent = target.parentElement
-                    if (parent && !parent.querySelector('svg')) {
-                      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
-                      svg.setAttribute('class', 'h-5 w-5')
-                      svg.setAttribute('fill', 'currentColor')
-                      svg.setAttribute('viewBox', '0 0 20 20')
-                      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path')
-                      path.setAttribute('d', 'M18 8a2 2 0 0 0-2-2h-1.5V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v1H3.5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2V8zM7 5h6v1H7V5zm11 11H3.5V8H18v8z')
-                      svg.appendChild(path)
-                      parent.appendChild(svg)
-                    }
-                  }}
+                  unoptimized
                 />
               ) : (
                 <Key className="h-5 w-5" />
@@ -219,14 +207,14 @@ export default function Navigation() {
                   key={item.name}
                   href={item.href}
                   className={`group relative px-2.5 py-2 rounded-xl text-xs font-medium flex items-center space-x-1.5 transition-all duration-200 whitespace-nowrap ${active
-                      ? 'bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-300 shadow-sm'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800'
+                    ? 'bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-300 shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800'
                     }`}
                 >
                   <Icon
                     className={`h-3.5 w-3.5 flex-shrink-0 transition-colors duration-200 ${active
-                        ? 'text-blue-500'
-                        : 'text-gray-500 dark:text-gray-400 group-hover:text-blue-500'
+                      ? 'text-blue-500'
+                      : 'text-gray-500 dark:text-gray-400 group-hover:text-blue-500'
                       }`}
                   />
                   <span className="hidden md:inline">{item.name}</span>
@@ -284,8 +272,8 @@ export default function Navigation() {
                     setIsMobileMenuOpen(false)
                   }}
                   className={`w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${active
-                      ? 'bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-300'
-                      : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800'
+                    ? 'bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-300'
+                    : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800'
                     }`}
                 >
                   <Icon className="h-4 w-4" />

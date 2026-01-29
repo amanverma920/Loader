@@ -1,10 +1,10 @@
 'use client'
 
 import { useEffect, useState, Suspense } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
+import Link from 'next/link'
 import Navigation from '@/components/Navigation'
 import KeyList from '@/components/KeyList'
-import GenerateKeyModal from '@/components/GenerateKeyModal'
 import GenerateKeySuccessModal from '@/components/GenerateKeySuccessModal'
 import KeyDetailsModal from '@/components/KeyDetailsModal'
 import EditKeyModal from '@/components/EditKeyModal'
@@ -14,9 +14,9 @@ import { Key as KeyIcon, Plus, AlertCircle, Clock } from 'lucide-react'
 
 function KeysPageContent() {
   const searchParams = useSearchParams()
+  const router = useRouter()
   const [keys, setKeys] = useState<Key[]>([])
   const [loading, setLoading] = useState(true)
-  const [showGenerateModal, setShowGenerateModal] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [generatedKeyData, setGeneratedKeyData] = useState<any>(null)
   const [showDetailsModal, setShowDetailsModal] = useState(false)
@@ -52,12 +52,10 @@ function KeysPageContent() {
       // Remove query parameter from URL
       window.history.replaceState({}, '', '/keys')
     }
-    
-    // Check if generate query parameter is present
+
+    // Check if generate query parameter is present - redirect to generate-key page
     if (searchParams?.get('generate') === 'true') {
-      setShowGenerateModal(true)
-      // Remove query parameter from URL
-      window.history.replaceState({}, '', '/keys')
+      router.push('/generate-key')
     }
   }, [searchParams, auth.role])
 
@@ -66,7 +64,7 @@ function KeysPageContent() {
       setLoading(true)
       const response = await fetch('/api/keys')
       const data = await response.json()
-      
+
       if (data.status) {
         // Sort keys by createdAt (newest first) so new keys appear at top
         const sortedKeys = [...data.data].sort((a: Key, b: Key) => {
@@ -83,50 +81,6 @@ function KeysPageContent() {
       setError('Error loading keys. Please try again.')
     } finally {
       setLoading(false)
-    }
-  }
-
-  const handleGenerateKey = async (keyData: any) => {
-    try {
-      const response = await fetch('/api/generate-key', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(keyData),
-      })
-
-      const result = await response.json()
-      
-      if (result.status) {
-        setGeneratedKeyData(result.data)
-        setShowGenerateModal(false)
-        setShowSuccessModal(true)
-        loadKeys() // Reload keys - new key will appear at top due to sorting
-      } else {
-        // Show error message - if server is off, this will show the message
-        const errorMessage = result.reason || 'Failed to generate key'
-        setError(errorMessage)
-        
-        // Check if error is about server being off - close modal in that case
-        const isServerOffError = errorMessage.toLowerCase().includes('server is turned off') || 
-                                 errorMessage.toLowerCase().includes('server off')
-        
-        if (isServerOffError) {
-          // Close modal after showing error message
-          setTimeout(() => {
-            setShowGenerateModal(false)
-            setError('') // Clear error after closing
-          }, 3000) // Show error for 3 seconds then close
-        } else {
-          // For other errors, keep modal open
-          setTimeout(() => setError(''), 10000) // Show for 10 seconds
-        }
-      }
-    } catch (error) {
-      console.error('Error generating key:', error)
-      setError('Error generating key. Please try again.')
-      setTimeout(() => setError(''), 5000)
     }
   }
 
@@ -151,7 +105,7 @@ function KeysPageContent() {
       })
 
       const result = await response.json()
-      
+
       if (result.status) {
         setShowEditModal(false)
         setSelectedKey(null)
@@ -183,7 +137,7 @@ function KeysPageContent() {
         })
 
         const result = await response.json()
-        
+
         if (result.status) {
           setSuccess(`Successfully deleted ${keyIds.length} key${keyIds.length > 1 ? 's' : ''}!`)
           loadKeys()
@@ -214,7 +168,7 @@ function KeysPageContent() {
         })
 
         const result = await response.json()
-        
+
         if (result.status) {
           setSuccess(`Successfully disabled ${keyIds.length} key${keyIds.length > 1 ? 's' : ''}!`)
           loadKeys()
@@ -245,7 +199,7 @@ function KeysPageContent() {
         })
 
         const result = await response.json()
-        
+
         if (result.status) {
           setSuccess(`Successfully activated ${keyIds.length} key${keyIds.length > 1 ? 's' : ''}!`)
           loadKeys()
@@ -276,7 +230,7 @@ function KeysPageContent() {
         })
 
         const result = await response.json()
-        
+
         if (result.status) {
           setSuccess(`Successfully reset UUIDs for ${keyIds.length} key${keyIds.length > 1 ? 's' : ''}!`)
           loadKeys()
@@ -300,14 +254,14 @@ function KeysPageContent() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
-          keyIds, 
-          updates: { expiryDate: newExpiryDate } 
+        body: JSON.stringify({
+          keyIds,
+          updates: { expiryDate: newExpiryDate }
         }),
       })
 
       const result = await response.json()
-      
+
       if (result.status) {
         // Don't show success message here, it will be shown after modal closes
         loadKeys()
@@ -330,7 +284,7 @@ function KeysPageContent() {
     const active = keys.filter(key => key.isActive).length
     const disabled = keys.filter(key => !key.isActive).length
     const expired = keys.filter(key => new Date(key.expiryDate) < new Date()).length
-    
+
     return { total, active, disabled, expired }
   }
 
@@ -346,7 +300,7 @@ function KeysPageContent() {
               <div className="h-6 sm:h-8 bg-gray-200 dark:bg-gray-700 rounded-xl w-1/2 sm:w-1/4 mb-3 sm:mb-4"></div>
               <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 sm:w-1/2"></div>
             </div>
-            
+
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
               {[...Array(4)].map((_, i) => (
                 <div key={i} className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm overflow-hidden shadow-lg rounded-2xl border border-gray-200/50 dark:border-gray-700/50">
@@ -363,7 +317,7 @@ function KeysPageContent() {
                 </div>
               ))}
             </div>
-            
+
             <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-gray-200/50 dark:border-gray-700/50">
               <div className="h-5 sm:h-6 bg-gray-200 dark:bg-gray-600 rounded w-1/3 mb-3 sm:mb-4"></div>
               <div className="space-y-3 sm:space-y-4">
@@ -381,7 +335,7 @@ function KeysPageContent() {
   return (
     <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-300">
       <Navigation />
-      
+
       <div className="max-w-7xl mx-auto py-4 sm:py-6 px-3 sm:px-4 sm:px-6 lg:px-8">
         <div className="px-2 sm:px-4 py-4 sm:py-6 sm:px-0 flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 sm:mb-8 space-y-3 sm:space-y-0">
           <div>
@@ -392,7 +346,7 @@ function KeysPageContent() {
               Manage API keys, monitor usage, and control access
             </p>
           </div>
-          
+
           <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
             {/* Extend Key button - Only for Super Owner, Owner and Admin, not Reseller */}
             {(auth.role === 'owner' || auth.role === 'admin' || auth.role === 'super owner') && (
@@ -404,13 +358,13 @@ function KeysPageContent() {
                 <span>Extend Key</span>
               </button>
             )}
-            <button
-              onClick={() => setShowGenerateModal(true)}
+            <Link
+              href="/generate-key"
               className="group relative flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-4 sm:px-6 py-2 rounded-xl text-xs sm:text-sm font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
             >
               <Plus className="h-3 w-3 sm:h-4 sm:w-4 group-hover:scale-110 transition-transform duration-300" />
               <span>Generate New Key</span>
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -505,12 +459,7 @@ function KeysPageContent() {
         </div>
       </div>
 
-      {showGenerateModal && (
-        <GenerateKeyModal
-          onClose={() => setShowGenerateModal(false)}
-          onGenerate={handleGenerateKey}
-        />
-      )}
+
 
       {showSuccessModal && generatedKeyData && (
         <GenerateKeySuccessModal

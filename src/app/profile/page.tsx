@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Navigation from '@/components/Navigation'
 import { User, Loader2, AlertCircle, CheckCircle, Upload, Image as ImageIcon } from 'lucide-react'
+import Image from 'next/image'
 import { useLogo } from '@/contexts/LogoContext'
 
 interface AuthInfo {
@@ -188,10 +189,13 @@ export default function ProfilePage() {
               <div className="flex items-center space-x-4">
                 <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
                   {profileImageInput ? (
-                    <img
+                    <Image
                       src={profileImageInput}
                       alt="Profile"
+                      width={96}
+                      height={96}
                       className="w-full h-full object-cover"
+                      unoptimized
                       onError={() => {
                         setProfileImageInput('/images/logo.svg')
                       }}
@@ -264,10 +268,13 @@ export default function ProfilePage() {
               <div className="flex items-center space-x-4">
                 <div className="w-20 h-20 rounded-xl overflow-hidden border-2 border-gray-200 dark:border-gray-700 bg-gradient-to-tr from-blue-500 to-purple-500 flex items-center justify-center">
                   {logoUrl ? (
-                    <img
+                    <Image
                       src={logoUrl}
                       alt="Logo"
+                      width={80}
+                      height={80}
                       className="w-full h-full object-contain"
+                      unoptimized
                       onError={() => {
                         // Fallback handled in Navigation component
                       }}
