@@ -101,16 +101,18 @@ export default function BlockedIPsPage() {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
       <Navigation />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between">
+        {/* Header with Icon Badge */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center space-x-3">
+            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-2xl bg-gradient-to-tr from-red-500 to-orange-500 flex items-center justify-center text-white shadow-lg shadow-red-500/30">
+              <Shield className="h-5 w-5 sm:h-6 sm:w-6" />
+            </div>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
-                <Shield className="h-8 w-8 text-red-500" />
+              <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
                 Blocked IP Addresses
               </h1>
-              <p className="text-gray-600 dark:text-gray-400 mt-2">
-                Manage IP addresses that have been blocked due to security violations
+              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                Manage IPs blocked due to security violations
               </p>
             </div>
           </div>
@@ -118,96 +120,97 @@ export default function BlockedIPsPage() {
 
         {/* Error Message */}
         {error && (
-          <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-center space-x-2">
-            <AlertTriangle className="h-5 w-5 text-red-500" />
-            <span className="text-red-700 dark:text-red-400">{error}</span>
+          <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl flex items-center space-x-3 shadow-lg">
+            <div className="p-2 bg-red-100 dark:bg-red-900/50 rounded-xl">
+              <AlertTriangle className="h-5 w-5 text-red-500" />
+            </div>
+            <span className="text-red-700 dark:text-red-400 font-medium">{error}</span>
           </div>
         )}
 
         {/* Blocked IPs List */}
         {blockedIPs.length === 0 ? (
-          <div className="text-center py-12">
-            <Shield className="mx-auto h-12 w-12 text-gray-400" />
-            <h3 className="mt-4 text-lg font-medium text-gray-900 dark:text-white">
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl p-8 sm:p-12 text-center shadow-xl border border-gray-200/50 dark:border-gray-700/50">
+            <div className="p-4 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 rounded-2xl w-fit mx-auto mb-4">
+              <Shield className="h-12 w-12 text-gray-400 dark:text-gray-500" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               No blocked IP addresses
             </h3>
-            <p className="mt-2 text-gray-500 dark:text-gray-400">
+            <p className="mt-2 text-gray-500 dark:text-gray-400 text-sm">
               All IP addresses are currently allowed to access the system.
             </p>
           </div>
         ) : (
-          <div className="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-xl rounded-2xl overflow-hidden border border-gray-200/50 dark:border-gray-700/50">
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                <thead className="bg-gray-50 dark:bg-gray-700">
+                <thead className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="px-4 sm:px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
                       IP Address
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="px-4 sm:px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider hidden md:table-cell">
                       Blocked At
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="px-4 sm:px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider hidden lg:table-cell">
                       Reason
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                      Attempts
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="px-4 sm:px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
                       Status
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                      Remaining Time
+                    <th className="px-4 sm:px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider hidden sm:table-cell">
+                      Time
                     </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                    <th className="px-4 sm:px-6 py-4 text-right text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
                       Actions
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                <tbody className="divide-y divide-gray-200/50 dark:divide-gray-700/50">
                   {blockedIPs.map((ip) => (
-                    <tr key={ip._id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900 dark:text-white font-mono">
-                          {ip.ip}
+                    <tr key={ip._id} className="hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-colors">
+                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <div className="p-2 bg-gradient-to-br from-red-100 to-orange-100 dark:from-red-900/50 dark:to-orange-900/50 rounded-lg mr-3">
+                            <Shield className="h-4 w-4 text-red-600 dark:text-red-400" />
+                          </div>
+                          <span className="text-sm font-medium text-gray-900 dark:text-white font-mono">
+                            {ip.ip}
+                          </span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap hidden md:table-cell">
                         <div className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2">
                           <Clock className="h-4 w-4" />
                           {formatDate(ip.blockedAt)}
                         </div>
                       </td>
-                      <td className="px-6 py-4">
-                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                      <td className="px-4 sm:px-6 py-4 hidden lg:table-cell">
+                        <div className="text-sm text-gray-500 dark:text-gray-400 max-w-xs truncate">
                           {ip.reason}
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
-                          {ip.attemptCount}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${ip.isPermanent
-                          ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
-                          : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
+                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold shadow-sm ${ip.isPermanent
+                          ? 'bg-gradient-to-r from-red-100 to-red-200 text-red-700 dark:from-red-900/60 dark:to-red-800/60 dark:text-red-200'
+                          : 'bg-gradient-to-r from-yellow-100 to-amber-100 text-yellow-700 dark:from-yellow-900/60 dark:to-amber-800/60 dark:text-yellow-200'
                           }`}>
                           {ip.isPermanent ? 'Permanent' : 'Temporary'}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap hidden sm:table-cell">
                         <div className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2">
                           <Timer className="h-4 w-4" />
                           {formatRemainingTime(ip.remainingMinutes || null)}
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-right">
                         <button
                           onClick={() => handleUnblockIP(ip._id)}
-                          className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 transition-colors duration-200 flex items-center gap-1 ml-auto"
+                          className="inline-flex items-center px-3 py-1.5 rounded-lg bg-gradient-to-r from-red-500 to-orange-500 text-white text-sm font-medium shadow-lg shadow-red-500/25 hover:shadow-red-500/40 hover:scale-105 transition-all duration-200"
                         >
-                          <Unlock className="h-4 w-4" />
+                          <Unlock className="h-4 w-4 mr-1" />
                           Unblock
                         </button>
                       </td>

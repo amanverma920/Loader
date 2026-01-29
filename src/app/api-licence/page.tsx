@@ -16,7 +16,7 @@ export default function ApiLicencePage() {
   const [auth, setAuth] = useState<AuthInfo>({ authenticated: false })
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
-  
+
   const [apiKey, setApiKey] = useState('')
   const [secretKey, setSecretKey] = useState('')
   const [showApiKey, setShowApiKey] = useState(false)
@@ -25,10 +25,10 @@ export default function ApiLicencePage() {
   const [currentSecretKey, setCurrentSecretKey] = useState('')
   const [maskedApiKey, setMaskedApiKey] = useState('')
   const [maskedSecretKey, setMaskedSecretKey] = useState('')
-  
+
   const [error, setError] = useState<string | null>(null)
   const [message, setMessage] = useState<string | null>(null)
-  
+
   // Key User Permission states
   const [usernamePermissions, setUsernamePermissions] = useState<any[]>([])
   const [selectedUsername, setSelectedUsername] = useState('')
@@ -121,7 +121,7 @@ export default function ApiLicencePage() {
   const handleUsernameChange = async (username: string) => {
     setSelectedUsername(username)
     setSelectedUsers([])
-    
+
     if (username) {
       // Load users created by this username (for auto mode)
       setLoadingUsers(true)
@@ -131,7 +131,7 @@ export default function ApiLicencePage() {
 
         if (data.status) {
           setAvailableUsers(data.data || [])
-          
+
           // Check if permission already exists for this username
           const existing = usernamePermissions.find((p: any) => p.username === username)
           if (existing) {
@@ -181,7 +181,7 @@ export default function ApiLicencePage() {
 
       setMessage('Key User Permission saved successfully!')
       await loadUsernamePermissions()
-      
+
       setTimeout(() => {
         setMessage(null)
       }, 3000)
@@ -217,13 +217,13 @@ export default function ApiLicencePage() {
 
       setMessage('Permission deleted successfully!')
       await loadUsernamePermissions()
-      
+
       if (selectedUsername === username) {
         setSelectedUsername('')
         setSelectedUsers([])
         setAvailableUsers([])
       }
-      
+
       setTimeout(() => {
         setMessage(null)
       }, 3000)
@@ -286,11 +286,11 @@ export default function ApiLicencePage() {
 
       setMessage('API keys updated successfully!')
       await loadApiKeys()
-      
+
       // Clear input fields after successful save
       setApiKey('')
       setSecretKey('')
-      
+
       setTimeout(() => {
         setMessage(null)
       }, 3000)
@@ -330,7 +330,7 @@ export default function ApiLicencePage() {
       setMessage('API Key updated successfully!')
       setApiKey('')
       await loadApiKeys()
-      
+
       setTimeout(() => {
         setMessage(null)
       }, 3000)
@@ -370,7 +370,7 @@ export default function ApiLicencePage() {
       setMessage('Secret Key updated successfully!')
       setSecretKey('')
       await loadApiKeys()
-      
+
       setTimeout(() => {
         setMessage(null)
       }, 3000)
@@ -397,15 +397,15 @@ export default function ApiLicencePage() {
       <main className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white/80 dark:bg-gray-900/80 rounded-2xl shadow-lg shadow-gray-200/50 dark:shadow-black/40 p-6">
           {/* Header */}
-          <div className="flex items-center space-x-3 mb-5">
-            <div className="h-10 w-10 rounded-2xl bg-gradient-to-tr from-purple-500 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-purple-500/40">
-              <Key className="h-5 w-5" />
+          <div className="flex items-center space-x-3 mb-6">
+            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-2xl bg-gradient-to-tr from-purple-500 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-purple-500/30">
+              <Key className="h-5 w-5 sm:h-6 sm:w-6" />
             </div>
             <div>
-              <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
+              <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
                 API Licence
               </h1>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                 Manage your API Key and Secret Key for authentication.
               </p>
             </div>
@@ -434,7 +434,7 @@ export default function ApiLicencePage() {
                 Key User Permission
               </h2>
             </div>
-            
+
             <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
               Configure which user keys can be used with <code className="px-1 py-0.5 bg-gray-100 dark:bg-gray-800 rounded">api/connect/username</code> endpoints.
             </p>
@@ -479,7 +479,7 @@ export default function ApiLicencePage() {
                     <option value="manual">Manual User Key</option>
                   </select>
                   <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                    {permissionType === 'auto' 
+                    {permissionType === 'auto'
                       ? 'All users created by this username (via referral) can use their keys.'
                       : 'Select specific users whose keys can be used with this username endpoint.'}
                   </p>
@@ -591,7 +591,7 @@ export default function ApiLicencePage() {
                 API Key
               </h2>
             </div>
-            
+
             <div className="mb-4">
               <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
                 Current API Key
@@ -649,7 +649,7 @@ export default function ApiLicencePage() {
                 Secret Key
               </h2>
             </div>
-            
+
             <div className="mb-4">
               <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
                 Current Secret Key

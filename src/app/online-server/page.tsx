@@ -16,13 +16,13 @@ export default function OnlineServerPage() {
   const [auth, setAuth] = useState<AuthInfo>({ authenticated: false })
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
-  
+
   const [isMaintenanceMode, setIsMaintenanceMode] = useState(false)
   const [maintenanceMessage, setMaintenanceMessage] = useState('Server is currently under maintenance. Please try again later.')
-  
+
   const [error, setError] = useState<string | null>(null)
   const [message, setMessage] = useState<string | null>(null)
-  
+
   // Mod Name Change states
   const [modname, setModname] = useState('')
   const [currentModname, setCurrentModname] = useState('')
@@ -80,7 +80,7 @@ export default function OnlineServerPage() {
       setError('Failed to load server status.')
     }
   }
-  
+
   const loadModNames = async () => {
     try {
       const res = await fetch('/api/online-server', { cache: 'no-store' })
@@ -94,7 +94,7 @@ export default function OnlineServerPage() {
       console.error(err)
     }
   }
-  
+
   const loadAllUsers = async () => {
     try {
       const res = await fetch('/api/users', { cache: 'no-store' })
@@ -107,7 +107,7 @@ export default function OnlineServerPage() {
       console.error(err)
     }
   }
-  
+
   const handleUserModnameChange = (username: string) => {
     setSelectedUserForModname(username)
     const userMod = userModNames.find((u: any) => u.username === username)
@@ -119,7 +119,7 @@ export default function OnlineServerPage() {
       setUserModname('')
     }
   }
-  
+
   const handleSaveModname = async () => {
     setSaving(true)
     setError(null)
@@ -143,7 +143,7 @@ export default function OnlineServerPage() {
       setMessage('Mod Name updated successfully!')
       setModname('')
       await loadModNames()
-      
+
       setTimeout(() => {
         setMessage(null)
       }, 3000)
@@ -154,7 +154,7 @@ export default function OnlineServerPage() {
       setSaving(false)
     }
   }
-  
+
   const handleSaveUserModname = async () => {
     if (!selectedUserForModname) {
       setError('Please select a username.')
@@ -169,9 +169,9 @@ export default function OnlineServerPage() {
       const res = await fetch('/api/online-server', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           username: selectedUserForModname,
-          userModname: userModname.trim() || null 
+          userModname: userModname.trim() || null
         }),
       })
 
@@ -186,7 +186,7 @@ export default function OnlineServerPage() {
       setMessage('User Mod Name updated successfully!')
       setUserModname('')
       await loadModNames()
-      
+
       setTimeout(() => {
         setMessage(null)
       }, 3000)
@@ -223,7 +223,7 @@ export default function OnlineServerPage() {
 
       setIsMaintenanceMode(newStatus)
       setMessage(data.message || `Server ${newStatus ? 'is now in maintenance mode' : 'is now online'}`)
-      
+
       setTimeout(() => {
         setMessage(null)
       }, 3000)
@@ -264,7 +264,7 @@ export default function OnlineServerPage() {
       }
 
       setMessage('Maintenance message updated successfully!')
-      
+
       setTimeout(() => {
         setMessage(null)
       }, 3000)
@@ -291,19 +291,18 @@ export default function OnlineServerPage() {
       <main className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white/80 dark:bg-gray-900/80 rounded-2xl shadow-lg shadow-gray-200/50 dark:shadow-black/40 p-6">
           {/* Header */}
-          <div className="flex items-center space-x-3 mb-5">
-            <div className={`h-10 w-10 rounded-2xl flex items-center justify-center text-white shadow-md ${
-              isMaintenanceMode 
-                ? 'bg-gradient-to-tr from-red-500 to-orange-500 shadow-red-500/40' 
-                : 'bg-gradient-to-tr from-green-500 to-emerald-500 shadow-green-500/40'
-            }`}>
-              <Server className="h-5 w-5" />
+          <div className="flex items-center space-x-3 mb-6">
+            <div className={`h-10 w-10 sm:h-12 sm:w-12 rounded-2xl flex items-center justify-center text-white shadow-lg ${isMaintenanceMode
+                ? 'bg-gradient-to-tr from-red-500 to-orange-500 shadow-red-500/30'
+                : 'bg-gradient-to-tr from-green-500 to-emerald-500 shadow-green-500/30'
+              }`}>
+              <Server className="h-5 w-5 sm:h-6 sm:w-6" />
             </div>
             <div>
-              <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
+              <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
                 Online Server
               </h1>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                 Manage server maintenance mode and status.
               </p>
             </div>
@@ -332,16 +331,15 @@ export default function OnlineServerPage() {
                   Server Status
                 </h2>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
-                  {isMaintenanceMode 
-                    ? 'Server is currently in maintenance mode. All keys are disabled.' 
+                  {isMaintenanceMode
+                    ? 'Server is currently in maintenance mode. All keys are disabled.'
                     : 'Server is online. All keys are working normally.'}
                 </p>
               </div>
-              <div className={`flex items-center space-x-2 px-4 py-2 rounded-lg ${
-                isMaintenanceMode 
-                  ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300' 
+              <div className={`flex items-center space-x-2 px-4 py-2 rounded-lg ${isMaintenanceMode
+                  ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300'
                   : 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300'
-              }`}>
+                }`}>
                 {isMaintenanceMode ? (
                   <PowerOff className="h-5 w-5" />
                 ) : (
@@ -357,11 +355,10 @@ export default function OnlineServerPage() {
               <button
                 onClick={() => handleToggleMaintenance(false)}
                 disabled={saving || !isMaintenanceMode}
-                className={`flex-1 py-3 px-4 rounded-lg font-medium flex items-center justify-center space-x-2 transition-all ${
-                  !isMaintenanceMode
+                className={`flex-1 py-3 px-4 rounded-lg font-medium flex items-center justify-center space-x-2 transition-all ${!isMaintenanceMode
                     ? 'bg-green-600 hover:bg-green-700 text-white shadow-lg shadow-green-500/40'
                     : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed'
-                } disabled:opacity-50 disabled:cursor-not-allowed`}
+                  } disabled:opacity-50 disabled:cursor-not-allowed`}
               >
                 {saving && !isMaintenanceMode ? (
                   <Loader2 className="h-5 w-5 animate-spin" />
@@ -376,11 +373,10 @@ export default function OnlineServerPage() {
               <button
                 onClick={() => handleToggleMaintenance(true)}
                 disabled={saving || isMaintenanceMode}
-                className={`flex-1 py-3 px-4 rounded-lg font-medium flex items-center justify-center space-x-2 transition-all ${
-                  isMaintenanceMode
+                className={`flex-1 py-3 px-4 rounded-lg font-medium flex items-center justify-center space-x-2 transition-all ${isMaintenanceMode
                     ? 'bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-500/40'
                     : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed'
-                } disabled:opacity-50 disabled:cursor-not-allowed`}
+                  } disabled:opacity-50 disabled:cursor-not-allowed`}
               >
                 {saving && isMaintenanceMode ? (
                   <Loader2 className="h-5 w-5 animate-spin" />
@@ -402,7 +398,7 @@ export default function OnlineServerPage() {
                 Maintenance Message
               </h2>
             </div>
-            
+
             <div className="mb-4">
               <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
                 Message to display when maintenance mode is active
@@ -440,11 +436,11 @@ export default function OnlineServerPage() {
                 Mod Name Change
               </h2>
             </div>
-            
+
             <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
               Set the mod name that will be returned in the response for <code className="px-1 py-0.5 bg-gray-100 dark:bg-gray-800 rounded">api/connect</code> endpoint.
             </p>
-            
+
             <div className="mb-4">
               <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
                 Current Mod Name
@@ -502,7 +498,7 @@ export default function OnlineServerPage() {
                 Mod Name Change Specific User
               </h2>
             </div>
-            
+
             <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
               Set the mod name for a specific username. This will override the general mod name for <code className="px-1 py-0.5 bg-gray-100 dark:bg-gray-800 rounded">api/connect/{'{username}'}</code> endpoint.
             </p>

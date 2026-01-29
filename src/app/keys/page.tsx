@@ -338,13 +338,18 @@ function KeysPageContent() {
 
       <div className="max-w-7xl mx-auto py-4 sm:py-6 px-3 sm:px-4 sm:px-6 lg:px-8">
         <div className="px-2 sm:px-4 py-4 sm:py-6 sm:px-0 flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 sm:mb-8 space-y-3 sm:space-y-0">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
-              Keys Management
-            </h1>
-            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-1 sm:mt-2">
-              Manage API keys, monitor usage, and control access
-            </p>
+          <div className="flex items-center space-x-3">
+            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-2xl bg-gradient-to-tr from-blue-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
+              <KeyIcon className="h-5 w-5 sm:h-6 sm:w-6" />
+            </div>
+            <div>
+              <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+                Keys Management
+              </h1>
+              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                Manage API keys, monitor usage, and control access
+              </p>
+            </div>
           </div>
 
           <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">

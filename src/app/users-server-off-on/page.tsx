@@ -103,7 +103,7 @@ export default function UsersServerOffOnPage() {
   const handleSelectAll = () => {
     const filtered = getFilteredUsers()
     const allSelected = filtered.every(u => selectedUsers.has(u.username))
-    
+
     if (allSelected) {
       // Deselect all
       setSelectedUsers(prev => {
@@ -213,16 +213,16 @@ export default function UsersServerOffOnPage() {
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-6">
           <div className="flex items-center space-x-3">
-            <div className="h-10 w-10 rounded-2xl bg-gradient-to-tr from-blue-500 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-blue-500/40">
-              <Server className="h-5 w-5" />
+            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-2xl bg-gradient-to-tr from-blue-500 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
+              <Server className="h-5 w-5 sm:h-6 sm:w-6" />
             </div>
             <div>
-              <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
+              <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
                 Users Server Off/On
               </h1>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                 Manage user server status. When turned off, all keys stop working.
               </p>
             </div>
@@ -368,9 +368,8 @@ export default function UsersServerOffOnPage() {
                     return (
                       <tr
                         key={user.username}
-                        className={`hover:bg-blue-50/40 dark:hover:bg-blue-900/10 transition-colors ${
-                          isSelected ? 'bg-blue-100/50 dark:bg-blue-900/20' : ''
-                        }`}
+                        className={`hover:bg-blue-50/40 dark:hover:bg-blue-900/10 transition-colors ${isSelected ? 'bg-blue-100/50 dark:bg-blue-900/20' : ''
+                          }`}
                       >
                         <td className="px-6 py-3 whitespace-nowrap">
                           <input
@@ -391,10 +390,10 @@ export default function UsersServerOffOnPage() {
                               (user.role === 'super owner'
                                 ? 'bg-gradient-to-r from-yellow-100 to-orange-100 text-orange-700 dark:from-yellow-900/40 dark:to-orange-900/40 dark:text-orange-200'
                                 : user.role === 'owner'
-                                ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-200'
-                                : user.role === 'admin'
-                                ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-200'
-                                : 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-200')
+                                  ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-200'
+                                  : user.role === 'admin'
+                                    ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-200'
+                                    : 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-200')
                             }
                           >
                             {user.role?.toUpperCase()}

@@ -232,13 +232,18 @@ export default function GenerateKeyPage() {
             <Navigation />
 
             <div className="max-w-2xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                <div className="mb-6">
-                    <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
-                        Generate Key
-                    </h1>
-                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-2">
-                        Create a new API key with custom settings
-                    </p>
+                <div className="mb-6 flex items-center space-x-3">
+                    <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-2xl bg-gradient-to-tr from-blue-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
+                        <Plus className="h-5 w-5 sm:h-6 sm:w-6" />
+                    </div>
+                    <div>
+                        <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+                            Generate Key
+                        </h1>
+                        <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                            Create a new API key with custom settings
+                        </p>
+                    </div>
                 </div>
 
                 {error && (
@@ -334,8 +339,8 @@ export default function GenerateKeyPage() {
                                                     type="button"
                                                     onClick={() => handleDurationSelect(dp.duration, type)}
                                                     className={`w-full px-4 py-3 text-left transition-all duration-150 ${isSelected
-                                                            ? 'bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-600'
-                                                            : 'hover:bg-gray-50 dark:hover:bg-gray-700 border-l-4 border-transparent'
+                                                        ? 'bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-600'
+                                                        : 'hover:bg-gray-50 dark:hover:bg-gray-700 border-l-4 border-transparent'
                                                         }`}
                                                 >
                                                     <div className="flex items-center justify-between gap-2">
