@@ -257,9 +257,9 @@ export default function Navigation() {
         </div>
       </div>
 
-      {/* Mobile Sidebar - Slides from Left */}
+      {/* Mobile Sidebar - Slides from Left, Below Header */}
       <div
-        className={`md:hidden fixed inset-0 z-50 transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        className={`md:hidden fixed inset-x-0 top-16 bottom-0 z-50 transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
           }`}
       >
         {/* Backdrop */}
@@ -273,37 +273,8 @@ export default function Navigation() {
           className={`absolute top-0 left-0 h-full w-72 bg-white dark:bg-gray-900 shadow-2xl transform transition-transform duration-300 ease-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
             }`}
         >
-          {/* Sidebar Header */}
-          <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-            <div className="flex items-center space-x-3">
-              <div className="flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-tr from-blue-500 to-purple-500 text-white shadow-lg overflow-hidden">
-                {logoUrl && logoUrl !== '/images/logo.svg' ? (
-                  <Image
-                    src={logoUrl}
-                    alt={`${panelName || 'NexPanel'} Logo`}
-                    width={40}
-                    height={40}
-                    className="w-full h-full object-cover"
-                    unoptimized
-                  />
-                ) : (
-                  <Key className="h-5 w-5" />
-                )}
-              </div>
-              <span className="text-base font-semibold text-gray-900 dark:text-white">
-                {panelName || 'NexPanel'}
-              </span>
-            </div>
-            <button
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="p-2 rounded-xl text-gray-500 hover:text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-800 transition-all"
-            >
-              <X className="h-5 w-5" />
-            </button>
-          </div>
-
-          {/* Navigation Items */}
-          <div className="flex-1 overflow-y-auto py-4 px-3">
+          {/* Navigation Items - No Header */}
+          <div className="overflow-y-auto py-4 px-3 h-[calc(100%-80px)]">
             <div className="space-y-1">
               {navigationItems.map((item) => {
                 const active = isActive(item.href)

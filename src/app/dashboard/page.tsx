@@ -250,22 +250,21 @@ export default function Dashboard() {
                 <button
                   key={action.name}
                   onClick={() => router.push(action.href)}
-                  className="group flex-shrink-0 w-[160px] sm:w-full relative bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700 overflow-hidden hover:-translate-y-1"
+                  className="group flex-shrink-0 w-[140px] sm:w-full relative bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700 overflow-hidden hover:-translate-y-1"
                 >
                   {/* Gradient background on hover */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${action.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
 
-                  <div className="relative">
-                    <div className={`p-3 rounded-xl bg-gradient-to-br ${action.gradient} w-fit mb-3 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                  <div className="relative flex flex-col items-center text-center">
+                    <div className={`p-3 rounded-xl bg-gradient-to-br ${action.gradient} mb-3 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
                       <Icon className="h-6 w-6 text-white" strokeWidth={2.5} />
                     </div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-white text-sm sm:text-base transition-colors duration-300">
+                    <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-white text-sm transition-colors duration-300">
                       {action.name}
                     </h3>
                     <p className="text-xs text-gray-500 dark:text-gray-400 group-hover:text-white/80 mt-1 transition-colors duration-300">
                       {action.description}
                     </p>
-                    <ArrowRight className="absolute bottom-0 right-0 h-4 w-4 text-gray-400 group-hover:text-white opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
                   </div>
                 </button>
               )
