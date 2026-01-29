@@ -159,15 +159,15 @@ export default function LoginPage() {
         {/* Mobile Header with Logo */}
         <div className="lg:hidden relative z-10 pt-6 pb-2 px-6">
           <div className="flex items-center justify-center space-x-3">
-            {/* Logo Container - Smaller */}
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/25 overflow-hidden">
+            {/* Logo Container - Round */}
+            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/25 overflow-hidden">
               {logoUrl && logoUrl !== '/images/logo.svg' ? (
                 <Image
                   src={logoUrl}
                   alt={`${panelName || 'NexPanel'} Logo`}
-                  width={32}
-                  height={32}
-                  className="w-full h-full object-contain p-1"
+                  width={40}
+                  height={40}
+                  className="w-full h-full object-cover"
                   unoptimized
                 />
               ) : (
@@ -181,8 +181,8 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* Form Container */}
-        <div className="flex-1 flex items-center justify-center px-6 py-8 relative z-10">
+        {/* Form Container - Moved up */}
+        <div className="flex-1 flex items-start justify-center px-6 py-4 relative z-10">
           <div className="w-full max-w-md">
             {/* Form Card - Enhanced for Mobile */}
             <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl rounded-3xl p-8 shadow-2xl shadow-gray-200/50 dark:shadow-black/30 border border-gray-100 dark:border-gray-800">
