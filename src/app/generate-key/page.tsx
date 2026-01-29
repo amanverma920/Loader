@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import SidebarLayout, { GlassCard, GlassCardContent } from '@/components/SidebarLayout'
+import Navigation from '@/components/Navigation'
 import GenerateKeySuccessModal from '@/components/GenerateKeySuccessModal'
 import { Key, Users, Calendar, Loader2, Zap, Wallet, AlertCircle, ChevronDown, Clock, Plus } from 'lucide-react'
 
@@ -215,23 +215,37 @@ export default function GenerateKeyPage() {
 
     if (loading) {
         return (
-            <SidebarLayout title="Generate Key" description="Loading..." icon={Plus} iconGradient="from-blue-500 to-purple-600">
-                <div className="flex items-center justify-center py-12">
-                    <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
-                    <span className="ml-3 text-gray-600 dark:text-gray-400">Loading settings...</span>
+            <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-300">
+                <Navigation />
+                <div className="max-w-2xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    <div className="flex items-center justify-center py-12">
+                        <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+                        <span className="ml-3 text-gray-600 dark:text-gray-400">Loading settings...</span>
+                    </div>
                 </div>
-            </SidebarLayout>
+            </div>
         )
     }
 
     return (
-        <SidebarLayout
-            title="Generate Key"
-            description="Create a new API key with custom settings"
-            icon={Plus}
-            iconGradient="from-blue-500 to-purple-600"
-        >
-            <div className="max-w-2xl mx-auto">
+        <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-300">
+            <Navigation />
+
+            <div className="max-w-2xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <div className="mb-6 flex items-center space-x-3">
+                    <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-2xl bg-gradient-to-tr from-blue-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
+                        <Plus className="h-5 w-5 sm:h-6 sm:w-6" />
+                    </div>
+                    <div>
+                        <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+                            Generate Key
+                        </h1>
+                        <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                            Create a new API key with custom settings
+                        </p>
+                    </div>
+                </div>
+
                 {error && (
                     <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl flex items-center space-x-3 shadow-lg">
                         <AlertCircle className="h-5 w-5 text-red-500 flex-shrink-0" />
@@ -239,7 +253,7 @@ export default function GenerateKeyPage() {
                     </div>
                 )}
 
-                <GlassCard>
+                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl shadow-xl rounded-2xl border border-gray-200/50 dark:border-gray-700/50 overflow-hidden">
                     <div className="flex items-center space-x-3 p-6 border-b border-gray-200 dark:border-gray-700">
                         <div className="p-2 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl">
                             <Plus className="h-5 w-5 text-white" />
@@ -481,18 +495,18 @@ export default function GenerateKeyPage() {
                             </button>
                         </div>
                     </form>
-                </GlassCard>
-
-                {showSuccessModal && generatedKeyData && (
-                    <GenerateKeySuccessModal
-                        keyData={generatedKeyData}
-                        onClose={() => {
-                            setShowSuccessModal(false)
-                            setGeneratedKeyData(null)
-                        }}
-                    />
-                )}
+                </div>
             </div>
-        </SidebarLayout>
+
+            {showSuccessModal && generatedKeyData && (
+                <GenerateKeySuccessModal
+                    keyData={generatedKeyData}
+                    onClose={() => {
+                        setShowSuccessModal(false)
+                        setGeneratedKeyData(null)
+                    }}
+                />
+            )}
+        </div>
     )
 }

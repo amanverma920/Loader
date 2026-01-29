@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import SidebarLayout from '@/components/SidebarLayout'
+import Navigation from '@/components/Navigation'
 import {
   Users,
   Shield,
@@ -297,13 +297,26 @@ export default function ManageUsersPage() {
   )
 
   return (
-    <SidebarLayout
-      title="Manage Users"
-      description="Owners can manage all users. Other owners and admins can only manage users they created."
-      icon={Users}
-      iconGradient="from-blue-500 to-indigo-600"
-    >
-      <div className="max-w-6xl mx-auto">
+    <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-300">
+      <Navigation />
+
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center space-x-3">
+            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-2xl bg-gradient-to-tr from-blue-500 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
+              <Users className="h-5 w-5 sm:h-6 sm:w-6" />
+            </div>
+            <div>
+              <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+                Manage Users
+              </h1>
+              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                Owners can manage all users. Other owners and admins can only manage users they created.
+              </p>
+            </div>
+          </div>
+        </div>
 
         {/* Search Bar */}
         {isOwnerOrAdmin && (
@@ -720,7 +733,7 @@ export default function ManageUsersPage() {
             </div>
           </div>
         )}
-      </div>
-    </SidebarLayout>
+      </main>
+    </div>
   )
 }
