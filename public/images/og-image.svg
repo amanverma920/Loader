@@ -1,0 +1,93 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1E293B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#334155;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="20" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  
+  <!-- Decorative elements -->
+  <circle cx="200" cy="150" r="100" fill="#3B82F6" opacity="0.1"/>
+  <circle cx="1000" cy="480" r="80" fill="#8B5CF6" opacity="0.1"/>
+  <circle cx="900" cy="120" r="60" fill="#10B981" opacity="0.1"/>
+  
+  <!-- Grid pattern -->
+  <g opacity="0.05">
+    <line x1="0" y1="0" x2="1200" y2="0" stroke="white" stroke-width="1"/>
+    <line x1="0" y1="126" x2="1200" y2="126" stroke="white" stroke-width="1"/>
+    <line x1="0" y1="252" x2="1200" y2="252" stroke="white" stroke-width="1"/>
+    <line x1="0" y1="378" x2="1200" y2="378" stroke="white" stroke-width="1"/>
+    <line x1="0" y1="504" x2="1200" y2="504" stroke="white" stroke-width="1"/>
+    <line x1="0" y1="630" x2="1200" y2="630" stroke="white" stroke-width="1"/>
+    
+    <line x1="0" y1="0" x2="0" y2="630" stroke="white" stroke-width="1"/>
+    <line x1="240" y1="0" x2="240" y2="630" stroke="white" stroke-width="1"/>
+    <line x1="480" y1="0" x2="480" y2="630" stroke="white" stroke-width="1"/>
+    <line x1="720" y1="0" x2="720" y2="630" stroke="white" stroke-width="1"/>
+    <line x1="960" y1="0" x2="960" y2="630" stroke="white" stroke-width="1"/>
+    <line x1="1200" y1="0" x2="1200" y2="630" stroke="white" stroke-width="1"/>
+  </g>
+  
+  <!-- Main logo -->
+  <g transform="translate(600, 200)">
+    <circle cx="0" cy="0" r="80" fill="url(#logoGradient)" filter="url(#glow)"/>
+    
+    <!-- Key icon -->
+    <g transform="translate(0, 0)">
+      <!-- Key head -->
+      <rect x="-20" y="-6" width="40" height="12" rx="6" fill="white"/>
+      <!-- Key teeth -->
+      <rect x="-12" y="-3" width="5" height="6" rx="2.5" fill="white"/>
+      <rect x="-4" y="-4.5" width="5" height="9" rx="2.5" fill="white"/>
+      <rect x="4" y="-6" width="5" height="12" rx="2.5" fill="white"/>
+      <rect x="12" y="-4.5" width="5" height="9" rx="2.5" fill="white"/>
+      <!-- Key shaft -->
+      <rect x="-28" y="-2.5" width="16" height="5" rx="2.5" fill="white"/>
+      <!-- Key ring -->
+      <circle cx="-36" cy="0" r="6" fill="none" stroke="white" stroke-width="2"/>
+    </g>
+    
+    <!-- N letter overlay -->
+    <text x="0" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="white">N</text>
+  </g>
+  
+  <!-- Title -->
+  <text x="600" y="380" text-anchor="middle" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="white">
+    NexPanel
+  </text>
+  
+  <!-- Subtitle -->
+  <text x="600" y="430" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" fill="#CBD5E1">
+    Advanced Admin Dashboard
+  </text>
+  
+  <!-- Description -->
+  <text x="600" y="480" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#94A3B8">
+    Professional key management and analytics platform
+  </text>
+  
+  <!-- Features -->
+  <g transform="translate(600, 540)">
+    <text x="-200" y="0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#64748B">🔑 Key Management</text>
+    <text x="0" y="0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#64748B">📊 Analytics</text>
+    <text x="200" y="0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#64748B">🛡️ Security</text>
+  </g>
+  
+  <!-- Bottom accent -->
+  <rect x="0" y="600" width="1200" height="30" fill="url(#logoGradient)"/>
+</svg>

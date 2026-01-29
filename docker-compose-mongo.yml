@@ -1,0 +1,9 @@
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"  # Exposing MongoDB port
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: loader1alex5402  # MongoDB admin username
+      MONGO_INITDB_ROOT_PASSWORD: v8u4l3p6k7j9w0z1m2b5y9s8x  # Mongo

@@ -1,0 +1,76 @@
+import { NextRequest, NextResponse } from 'next/server'
+import clientPromise from '@/lib/mongodb'
+import { GridFSBucket } from 'mongodb'
+
+export const dynamic = 'force-dynamic'
+
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ type: string }> | { type: string } }
+) {
+  try {
+    const client = await clientPromise
+    const db = client.db('nexpanel')
+    const bucket = new GridFSBucket(db, { bucketName: 'server_files' })
+
+    const resolvedParams = await Promise.resolve(params)
+    const fileType = resolvedParams.type
+
+    if (!fileType || fileType !== 'zip') {
+      return NextResponse.json(
+        { status: false, reason: 'Invalid file type. Only zip is allowed.' },
+        { status: 400 }
+      )
+    }
+
+    // Find the latest file of this type from database
+    const fileDoc = await db.collection('server_files').findOne({ fileType })
+    
+    if (!fileDoc || !fileDoc.gridfsId) {
+      return NextResponse.json(
+        { status: false, reason: 'File not found' },
+        { status: 404 }
+      )
+    }
+
+    // Get file from GridFS
+    const gridfsId = fileDoc.gridfsId
+    const files = await bucket.find({ _id: gridfsId }).toArray()
+    
+    if (files.length === 0) {
+      return NextResponse.json(
+        { status: false, reason: 'File not found in storage' },
+        { status: 404 }
+      )
+    }
+
+    const fileInfo = files[0]
+
+    // Get file stream from GridFS
+    const downloadStream = bucket.openDownloadStream(gridfsId)
+
+    // Convert stream to buffer
+    const chunks: Buffer[] = []
+    for await (const chunk of downloadStream) {
+      chunks.push(chunk)
+    }
+    const buffer = Buffer.concat(chunks)
+
+    // Return file with proper headers
+    return new NextResponse(buffer, {
+      headers: {
+        'Content-Type': fileInfo.contentType || 'application/octet-stream',
+        'Content-Disposition': `attachment; filename="${fileDoc.originalName || fileInfo.filename}"`,
+        'Content-Length': fileInfo.length.toString(),
+      },
+    })
+
+  } catch (error: any) {
+    console.error('Error serving file:', error)
+    return NextResponse.json(
+      { status: false, reason: 'Failed to serve file' },
+      { status: 500 }
+    )
+  }
+}
+

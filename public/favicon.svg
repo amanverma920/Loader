@@ -1,0 +1,29 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="16" cy="16" r="16" fill="url(#faviconGradient)"/>
+  
+  <!-- Key icon -->
+  <g transform="translate(16, 16)">
+    <!-- Key head -->
+    <rect x="-6" y="-2" width="12" height="4" rx="2" fill="white"/>
+    <!-- Key teeth -->
+    <rect x="-4" y="-1" width="2" height="2" rx="1" fill="white"/>
+    <rect x="-1" y="-1.5" width="2" height="3" rx="1" fill="white"/>
+    <rect x="2" y="-2" width="2" height="4" rx="1" fill="white"/>
+    <!-- Key shaft -->
+    <rect x="-8" y="-1" width="4" height="2" rx="1" fill="white"/>
+    <!-- Key ring -->
+    <circle cx="-10" cy="0" r="2" fill="none" stroke="white" stroke-width="1"/>
+  </g>
+  
+  <!-- N letter -->
+  <text x="16" y="22" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="white">N</text>
+  
+  <!-- Gradient definition -->
+  <defs>
+    <linearGradient id="faviconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>
